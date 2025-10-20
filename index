@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>寒烟主页</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link rel="stylesheet" href="css/bd-new.css">
+    <style>
+    * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	color: #fff;
+	overflow-x: hidden;
+	min-height: 100vh;
+}
+
+/* 星空背景容器 - 来自index-副本.html */
+.start-background-container {
+	background-attachment: fixed;
+	background: linear-gradient(135deg, #00f0e8 0%, #c800c8 50%, #4ec802 100%);
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+/* 添加星云效果增强渐变背景 - 来自index-副本.html */
+.start-background-container::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background:
+		radial-gradient(circle at 20% 30%, rgba(120, 60, 200, 0.1) 0%, transparent 50%),
+		radial-gradient(circle at 80% 70%, rgba(0, 100, 200, 0.15) 0%, transparent 50%),
+		radial-gradient(circle at 40% 80%, rgba(0, 150, 255, 0.1) 0%, transparent 50%);
+	animation: nebulaPulse 20s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaPulse {
+	0% {
+		opacity: 0.3;
+		transform: scale(1);
+	}
+
+	100% {
+		opacity: 0.7;
+		transform: scale(1.1);
+	}
+}
+
+.start-background-container .stars {
+	animation: rotate 90s linear infinite;
+	bottom: 0;
+	left: 50%;
+	perspective-origin: 50% 100%;
+	position: fixed;
+	transform: perspective(600px) translateX(300px) rotate(20deg) rotateX(-40deg) rotateY(-60deg);
+	transform-style: preserve-3d
+}
+
+.start-background-container .star {
+	animation: opacityStar 2s linear infinite;
+	backface-visibility: hidden;
+	background: #fff;
+	height: 2px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 2px
+}
+
+@keyframes rotate {
+	0% {
+		transform: perspective(600px) rotate(20deg) rotateX(-40deg) rotateY(0)
+	}
+
+	to {
+		transform: perspective(600px) rotate(20deg) rotateX(-40deg) rotateY(-1turn)
+	}
+}
+
+@keyframes opacityStar {
+	0% {
+		opacity: .1
+	}
+
+	50% {
+		opacity: 1
+	}
+
+	to {
+		opacity: .1
+	}
+}
+
+.meteor {
+	background-image: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0));
+	height: 1px;
+	left: 50%;
+	position: fixed;
+	transform: rotate(-45deg);
+	width: 300px
+}
+
+.meteor:before {
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 50%;
+	box-shadow: 0 0 15px 3px #fff;
+	content: "";
+	height: 5px;
+	margin-top: -2px;
+	position: absolute;
+	width: 4px
+}
+
+@keyframes meteorAnim {
+	0% {
+		margin-right: -300px;
+		margin-top: -300px;
+		opacity: 1
+	}
+
+	12% {
+		opacity: 0
+	}
+
+	15% {
+		margin-left: -600px;
+		margin-top: 300px;
+		opacity: 0
+	}
+
+	to {
+		opacity: 0
+	}
+}
+
+/* 主容器 - 来自con.html */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	position: relative;
+	z-index: 1;
+	min-height: calc(100vh - 140px);
+	display: flex;
+	flex-direction: column;
+}
+
+/* 头部样式 - 来自con.html */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 0;
+	margin-bottom: 40px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.logo i {
+	font-size: 2.5rem;
+	color: #4dabf7;
+	text-shadow: 0 0 10px rgba(77, 171, 247, 0.5);
+}
+
+.logo h1 {
+	font-size: 2rem;
+	font-weight: 300;
+	background: linear-gradient(to right, #a5d8ff, #4dabf7);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.time-date {
+	text-align: right;
+}
+
+.time {
+	font-size: 2.5rem;
+	font-weight: 200;
+	margin-bottom: 5px;
+}
+
+.date {
+	font-size: 1.2rem;
+	opacity: 0.8;
+}
+
+/* 搜索框样式 - 来自con.html */
+.search-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 50px;
+}
+
+.search-box {
+	display: flex;
+	width: 100%;
+	max-width: 600px;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border-radius: 50px;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+	border-color: rgba(77, 171, 247, 0.5);
+}
+
+.search-box input {
+	flex: 1;
+	padding: 15px 20px;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	font-size: 1.1rem;
+}
+
+.search-box input::placeholder {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.search-btn {
+	padding: 0 25px;
+	background: rgba(77, 171, 247, 0.3);
+	border: none;
+	color: white;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+	background: rgba(77, 171, 247, 0.5);
+}
+
+/* 网站链接区域 - 来自con.html */
+.sites-section {
+	margin-bottom: 50px;
+	flex-grow: 1;
+}
+
+.section-title {
+	font-size: 1.5rem;
+	margin-bottom: 25px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 300;
+}
+
+.section-title i {
+	color: #4dabf7;
+}
+
+.sites-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 20px;
+}
+
+.site-card {
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	border-radius: 15px;
+	padding: 20px 15px;
+	text-align: center;
+	transition: all 0.3s ease;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	cursor: pointer;
+	position: relative;
+}
+
+.site-card:hover {
+	transform: translateY(-5px);
+	background: rgba(255, 255, 255, 0.1);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	border-color: rgba(77, 171, 247, 0.3);
+}
+
+.site-icon {
+	font-size: 2rem;
+	margin-bottom: 10px;
+	color: #a5d8ff;
+}
+
+.site-name {
+	font-size: 0.9rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.delete-btn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: rgba(255, 0, 0, 0.3);
+	border: none;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	color: white;
+	font-size: 0.7rem;
+	cursor: pointer;
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+
+.site-card:hover .delete-btn {
+	opacity: 1;
+}
+
+.delete-btn:hover {
+	background: rgba(255, 0, 0, 0.6);
+}
+
+/* 添加网站区域 - 来自con.html */
+.add-site {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	border-radius: 15px;
+	padding: 20px;
+	border: 2px dashed rgba(255, 255, 255, 0.2);
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.add-site:hover {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: rgba(77, 171, 247, 0.5);
+}
+
+.add-site i {
+	font-size: 2.5rem;
+	margin-bottom: 10px;
+	color: #4dabf7;
+}
+
+/* 模态框样式 - 来自con.html */
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 100;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-content {
+	background: linear-gradient(135deg, #001a33 0%, #003366 100%);
+	border-radius: 20px;
+	padding: 30px;
+	width: 90%;
+	max-width: 500px;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.modal-title {
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.close-modal {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 1.5rem;
+	cursor: pointer;
+	opacity: 0.7;
+	transition: opacity 0.3s;
+}
+
+.close-modal:hover {
+	opacity: 1;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 0.9rem;
+	opacity: 0.8;
+}
+
+.form-control {
+	width: 100%;
+	padding: 12px 15px;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	color: white;
+	font-size: 1rem;
+	transition: all 0.3s;
+}
+
+.form-control:focus {
+	outline: none;
+	border-color: #4dabf7;
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.btn {
+	padding: 12px 25px;
+	border: none;
+	border-radius: 10px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.btn-primary {
+	background: #4dabf7;
+	color: white;
+}
+
+.btn-primary:hover {
+	background: #339af0;
+	box-shadow: 0 5px 15px rgba(51, 154, 240, 0.4);
+}
+
+.btn-block {
+	width: 100%;
+}
+
+/* 底部样式 - 来自con.html */
+footer {
+	text-align: center;
+	padding: 20px 0;
+	margin-top: auto;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	font-size: 0.9rem;
+	opacity: 0.7;
+	width: 100%;
+}
+
+/* 响应式设计 - 来自con.html */
+@media (max-width: 768px) {
+	header {
+		flex-direction: column;
+		gap: 20px;
+		text-align: center;
+	}
+
+	.time-date {
+		text-align: center;
+	}
+
+	.sites-grid {
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	}
+}
+    </style>
+	</head>
+	<body>
+		<div class="start-background-container">
+			<div class="stars">
+				<div class="star"
+					style="animation-delay: 9.56387s; transform-origin: 0px 0px 876.283px; transform: translate3d(0px, 0px, -876.283px) rotateY(72.4673deg) rotateX(-41.1103deg) scale(0.632388, 0.632388);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.15356s; transform-origin: 0px 0px 1069.88px; transform: translate3d(0px, 0px, -1069.88px) rotateY(14.6875deg) rotateX(-43.4235deg) scale(0.687522, 0.687522);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.20557s; transform-origin: 0px 0px 913.45px; transform: translate3d(0px, 0px, -913.45px) rotateY(191.027deg) rotateX(-29.1915deg) scale(0.634937, 0.634937);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.7002s; transform-origin: 0px 0px 1030.1px; transform: translate3d(0px, 0px, -1030.1px) rotateY(133.878deg) rotateX(-0.753251deg) scale(0.638561, 0.638561);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.98747s; transform-origin: 0px 0px 974.663px; transform: translate3d(0px, 0px, -974.663px) rotateY(26.1519deg) rotateX(-15.7009deg) scale(0.795751, 0.795751);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.99166s; transform-origin: 0px 0px 982.988px; transform: translate3d(0px, 0px, -982.988px) rotateY(33.0173deg) rotateX(-27.6432deg) scale(0.732739, 0.732739);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.56924s; transform-origin: 0px 0px 816.166px; transform: translate3d(0px, 0px, -816.166px) rotateY(108.34deg) rotateX(-0.57289deg) scale(0.337751, 0.337751);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.8753s; transform-origin: 0px 0px 802.832px; transform: translate3d(0px, 0px, -802.832px) rotateY(220.286deg) rotateX(-39.3867deg) scale(1.0545, 1.0545);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.13358s; transform-origin: 0px 0px 981.578px; transform: translate3d(0px, 0px, -981.578px) rotateY(151.269deg) rotateX(-24.3833deg) scale(0.555249, 0.555249);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.95744s; transform-origin: 0px 0px 1050.02px; transform: translate3d(0px, 0px, -1050.02px) rotateY(199.035deg) rotateX(-43.3485deg) scale(0.834387, 0.834387);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.01258s; transform-origin: 0px 0px 1080.59px; transform: translate3d(0px, 0px, -1080.59px) rotateY(209.664deg) rotateX(-40.2693deg) scale(1.19423, 1.19423);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.02841s; transform-origin: 0px 0px 1098.38px; transform: translate3d(0px, 0px, -1098.38px) rotateY(331.039deg) rotateX(-27.0272deg) scale(1.10176, 1.10176);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.91352s; transform-origin: 0px 0px 1077.07px; transform: translate3d(0px, 0px, -1077.07px) rotateY(341.76deg) rotateX(-3.98018deg) scale(1.19048, 1.19048);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.61487s; transform-origin: 0px 0px 998.939px; transform: translate3d(0px, 0px, -998.939px) rotateY(351.669deg) rotateX(-28.4394deg) scale(0.631362, 0.631362);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.79916s; transform-origin: 0px 0px 936.31px; transform: translate3d(0px, 0px, -936.31px) rotateY(300.156deg) rotateX(-5.53736deg) scale(0.874534, 0.874534);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.30707s; transform-origin: 0px 0px 847.629px; transform: translate3d(0px, 0px, -847.629px) rotateY(10.6145deg) rotateX(-3.47985deg) scale(1.07591, 1.07591);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.32354s; transform-origin: 0px 0px 927.496px; transform: translate3d(0px, 0px, -927.496px) rotateY(231.488deg) rotateX(-10.2695deg) scale(0.515301, 0.515301);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.89343s; transform-origin: 0px 0px 1018.46px; transform: translate3d(0px, 0px, -1018.46px) rotateY(44.0739deg) rotateX(-20.1822deg) scale(0.838329, 0.838329);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.421209s; transform-origin: 0px 0px 1084.4px; transform: translate3d(0px, 0px, -1084.4px) rotateY(88.7323deg) rotateX(-11.0694deg) scale(1.1451, 1.1451);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.5505s; transform-origin: 0px 0px 894.853px; transform: translate3d(0px, 0px, -894.853px) rotateY(236.731deg) rotateX(-20.1542deg) scale(0.316258, 0.316258);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.546s; transform-origin: 0px 0px 808.428px; transform: translate3d(0px, 0px, -808.428px) rotateY(123.31deg) rotateX(-1.03775deg) scale(0.306942, 0.306942);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.78283s; transform-origin: 0px 0px 1058.64px; transform: translate3d(0px, 0px, -1058.64px) rotateY(56.1279deg) rotateX(-13.2887deg) scale(0.232958, 0.232958);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.67093s; transform-origin: 0px 0px 800.244px; transform: translate3d(0px, 0px, -800.244px) rotateY(320.699deg) rotateX(-7.65099deg) scale(1.16744, 1.16744);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.635993s; transform-origin: 0px 0px 1051.23px; transform: translate3d(0px, 0px, -1051.23px) rotateY(27.9639deg) rotateX(-28.8558deg) scale(0.883529, 0.883529);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.16788s; transform-origin: 0px 0px 867.184px; transform: translate3d(0px, 0px, -867.184px) rotateY(279.527deg) rotateX(-41.1152deg) scale(0.855113, 0.855113);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.98907s; transform-origin: 0px 0px 830.676px; transform: translate3d(0px, 0px, -830.676px) rotateY(17.4586deg) rotateX(-31.4083deg) scale(1.08729, 1.08729);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.88598s; transform-origin: 0px 0px 1051.79px; transform: translate3d(0px, 0px, -1051.79px) rotateY(304.31deg) rotateX(-32.7378deg) scale(1.0508, 1.0508);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.77029s; transform-origin: 0px 0px 1013.97px; transform: translate3d(0px, 0px, -1013.97px) rotateY(241.466deg) rotateX(-3.24774deg) scale(0.287678, 0.287678);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.45016s; transform-origin: 0px 0px 1002.25px; transform: translate3d(0px, 0px, -1002.25px) rotateY(149.648deg) rotateX(-45.6583deg) scale(0.534491, 0.534491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.90375s; transform-origin: 0px 0px 1006.73px; transform: translate3d(0px, 0px, -1006.73px) rotateY(57.1486deg) rotateX(-44.7668deg) scale(1.02481, 1.02481);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.49129s; transform-origin: 0px 0px 888.475px; transform: translate3d(0px, 0px, -888.475px) rotateY(356.571deg) rotateX(-0.730763deg) scale(0.783268, 0.783268);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.74477s; transform-origin: 0px 0px 956.221px; transform: translate3d(0px, 0px, -956.221px) rotateY(53.2795deg) rotateX(-29.155deg) scale(0.540691, 0.540691);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.21755s; transform-origin: 0px 0px 830.584px; transform: translate3d(0px, 0px, -830.584px) rotateY(188.559deg) rotateX(-35.773deg) scale(0.472341, 0.472341);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.74335s; transform-origin: 0px 0px 939.436px; transform: translate3d(0px, 0px, -939.436px) rotateY(142.698deg) rotateX(-46.8712deg) scale(0.241308, 0.241308);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.18963s; transform-origin: 0px 0px 934.688px; transform: translate3d(0px, 0px, -934.688px) rotateY(303.946deg) rotateX(-21.8468deg) scale(1.08594, 1.08594);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.20306s; transform-origin: 0px 0px 936.004px; transform: translate3d(0px, 0px, -936.004px) rotateY(149.167deg) rotateX(-38.6475deg) scale(0.805934, 0.805934);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.24454s; transform-origin: 0px 0px 1098.64px; transform: translate3d(0px, 0px, -1098.64px) rotateY(190.544deg) rotateX(-3.71474deg) scale(1.19565, 1.19565);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.25971s; transform-origin: 0px 0px 824.813px; transform: translate3d(0px, 0px, -824.813px) rotateY(317.325deg) rotateX(-39.7006deg) scale(0.489768, 0.489768);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.29292s; transform-origin: 0px 0px 851.404px; transform: translate3d(0px, 0px, -851.404px) rotateY(252.035deg) rotateX(-6.67777deg) scale(0.583764, 0.583764);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.56577s; transform-origin: 0px 0px 922.365px; transform: translate3d(0px, 0px, -922.365px) rotateY(346.809deg) rotateX(-31.3616deg) scale(0.999521, 0.999521);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.16137s; transform-origin: 0px 0px 970.87px; transform: translate3d(0px, 0px, -970.87px) rotateY(296.466deg) rotateX(-19.9722deg) scale(0.475684, 0.475684);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.79577s; transform-origin: 0px 0px 931.958px; transform: translate3d(0px, 0px, -931.958px) rotateY(60.1815deg) rotateX(-1.29254deg) scale(0.925782, 0.925782);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.30253s; transform-origin: 0px 0px 1029.38px; transform: translate3d(0px, 0px, -1029.38px) rotateY(249.937deg) rotateX(-42.1762deg) scale(0.712325, 0.712325);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.52435s; transform-origin: 0px 0px 900.446px; transform: translate3d(0px, 0px, -900.446px) rotateY(266.894deg) rotateX(-28.4211deg) scale(0.945847, 0.945847);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.97391s; transform-origin: 0px 0px 997.631px; transform: translate3d(0px, 0px, -997.631px) rotateY(318.534deg) rotateX(-42.9462deg) scale(1.17856, 1.17856);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.38914s; transform-origin: 0px 0px 1032.17px; transform: translate3d(0px, 0px, -1032.17px) rotateY(300.113deg) rotateX(-0.432881deg) scale(0.638819, 0.638819);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.01766s; transform-origin: 0px 0px 945.309px; transform: translate3d(0px, 0px, -945.309px) rotateY(104.009deg) rotateX(-22.7554deg) scale(1.03519, 1.03519);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.95658s; transform-origin: 0px 0px 966.603px; transform: translate3d(0px, 0px, -966.603px) rotateY(12.3858deg) rotateX(-40.6174deg) scale(0.801711, 0.801711);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.92255s; transform-origin: 0px 0px 909.32px; transform: translate3d(0px, 0px, -909.32px) rotateY(98.6492deg) rotateX(-20.1743deg) scale(0.895035, 0.895035);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.01708s; transform-origin: 0px 0px 825.108px; transform: translate3d(0px, 0px, -825.108px) rotateY(242.458deg) rotateX(-15.468deg) scale(0.802232, 0.802232);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.38965s; transform-origin: 0px 0px 1063.77px; transform: translate3d(0px, 0px, -1063.77px) rotateY(181.721deg) rotateX(-5.14032deg) scale(0.564952, 0.564952);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.19802s; transform-origin: 0px 0px 1024.43px; transform: translate3d(0px, 0px, -1024.43px) rotateY(156.31deg) rotateX(-21.2427deg) scale(0.968369, 0.968369);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.49789s; transform-origin: 0px 0px 930.787px; transform: translate3d(0px, 0px, -930.787px) rotateY(40.0624deg) rotateX(-42.9225deg) scale(1.11346, 1.11346);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.99931s; transform-origin: 0px 0px 916.473px; transform: translate3d(0px, 0px, -916.473px) rotateY(57.8296deg) rotateX(-37.9661deg) scale(0.55829, 0.55829);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.97675s; transform-origin: 0px 0px 873.407px; transform: translate3d(0px, 0px, -873.407px) rotateY(13.6865deg) rotateX(-12.6695deg) scale(0.327844, 0.327844);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.52891s; transform-origin: 0px 0px 1024.22px; transform: translate3d(0px, 0px, -1024.22px) rotateY(348.495deg) rotateX(-10.4335deg) scale(0.933318, 0.933318);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.59045s; transform-origin: 0px 0px 1096.16px; transform: translate3d(0px, 0px, -1096.16px) rotateY(208.13deg) rotateX(-44.5268deg) scale(1.00841, 1.00841);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.58274s; transform-origin: 0px 0px 1094.08px; transform: translate3d(0px, 0px, -1094.08px) rotateY(148.839deg) rotateX(-20.7524deg) scale(0.647995, 0.647995);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.96374s; transform-origin: 0px 0px 1073.9px; transform: translate3d(0px, 0px, -1073.9px) rotateY(297.861deg) rotateX(-14.0943deg) scale(0.672015, 0.672015);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.18404s; transform-origin: 0px 0px 813.341px; transform: translate3d(0px, 0px, -813.341px) rotateY(59.0009deg) rotateX(-24.4863deg) scale(0.775073, 0.775073);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.26441s; transform-origin: 0px 0px 952.388px; transform: translate3d(0px, 0px, -952.388px) rotateY(192.065deg) rotateX(-39.285deg) scale(0.874855, 0.874855);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.58784s; transform-origin: 0px 0px 866.303px; transform: translate3d(0px, 0px, -866.303px) rotateY(207.847deg) rotateX(-17.1431deg) scale(0.950586, 0.950586);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.8044s; transform-origin: 0px 0px 1087.74px; transform: translate3d(0px, 0px, -1087.74px) rotateY(346.185deg) rotateX(-14.8884deg) scale(1.02817, 1.02817);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.97863s; transform-origin: 0px 0px 1056.25px; transform: translate3d(0px, 0px, -1056.25px) rotateY(185.488deg) rotateX(-9.49307deg) scale(0.281837, 0.281837);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.17831s; transform-origin: 0px 0px 932.164px; transform: translate3d(0px, 0px, -932.164px) rotateY(354.196deg) rotateX(-14.6502deg) scale(0.992583, 0.992583);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.8798s; transform-origin: 0px 0px 984.661px; transform: translate3d(0px, 0px, -984.661px) rotateY(9.64479deg) rotateX(-1.27885deg) scale(0.987499, 0.987499);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.29069s; transform-origin: 0px 0px 921.591px; transform: translate3d(0px, 0px, -921.591px) rotateY(133.23deg) rotateX(-7.86674deg) scale(1.02635, 1.02635);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.69417s; transform-origin: 0px 0px 1087.06px; transform: translate3d(0px, 0px, -1087.06px) rotateY(344.751deg) rotateX(-18.7901deg) scale(0.226803, 0.226803);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.19914s; transform-origin: 0px 0px 1099.32px; transform: translate3d(0px, 0px, -1099.32px) rotateY(145.891deg) rotateX(-1.99927deg) scale(1.05707, 1.05707);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.37472s; transform-origin: 0px 0px 933.681px; transform: translate3d(0px, 0px, -933.681px) rotateY(283.611deg) rotateX(-12.8165deg) scale(0.723472, 0.723472);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.62088s; transform-origin: 0px 0px 847.189px; transform: translate3d(0px, 0px, -847.189px) rotateY(79.6318deg) rotateX(-48.5927deg) scale(0.303994, 0.303994);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.01468s; transform-origin: 0px 0px 1006.64px; transform: translate3d(0px, 0px, -1006.64px) rotateY(100.385deg) rotateX(-9.68517deg) scale(1.15382, 1.15382);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.48528s; transform-origin: 0px 0px 1037.98px; transform: translate3d(0px, 0px, -1037.98px) rotateY(293.849deg) rotateX(-1.91132deg) scale(0.968377, 0.968377);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.93538s; transform-origin: 0px 0px 1016.81px; transform: translate3d(0px, 0px, -1016.81px) rotateY(216.467deg) rotateX(-29.1145deg) scale(0.703775, 0.703775);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.20952s; transform-origin: 0px 0px 1044.2px; transform: translate3d(0px, 0px, -1044.2px) rotateY(257.495deg) rotateX(-44.8392deg) scale(0.908345, 0.908345);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.536884s; transform-origin: 0px 0px 857.428px; transform: translate3d(0px, 0px, -857.428px) rotateY(110.369deg) rotateX(-47.837deg) scale(0.440765, 0.440765);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.97849s; transform-origin: 0px 0px 806.59px; transform: translate3d(0px, 0px, -806.59px) rotateY(280.368deg) rotateX(-0.921394deg) scale(0.250237, 0.250237);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.632163s; transform-origin: 0px 0px 976.926px; transform: translate3d(0px, 0px, -976.926px) rotateY(152.223deg) rotateX(-25.343deg) scale(0.87503, 0.87503);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.95898s; transform-origin: 0px 0px 860.467px; transform: translate3d(0px, 0px, -860.467px) rotateY(289.245deg) rotateX(-18.0234deg) scale(0.312918, 0.312918);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.27125s; transform-origin: 0px 0px 838.983px; transform: translate3d(0px, 0px, -838.983px) rotateY(242.296deg) rotateX(-28.7355deg) scale(0.784234, 0.784234);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.77088s; transform-origin: 0px 0px 850.333px; transform: translate3d(0px, 0px, -850.333px) rotateY(95.9404deg) rotateX(-39.6312deg) scale(0.582207, 0.582207);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.70873s; transform-origin: 0px 0px 804.794px; transform: translate3d(0px, 0px, -804.794px) rotateY(296.849deg) rotateX(-9.01728deg) scale(0.368618, 0.368618);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.04314s; transform-origin: 0px 0px 961.999px; transform: translate3d(0px, 0px, -961.999px) rotateY(64.0132deg) rotateX(-49.6757deg) scale(0.762151, 0.762151);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.10325s; transform-origin: 0px 0px 1092.85px; transform: translate3d(0px, 0px, -1092.85px) rotateY(281.614deg) rotateX(-41.3276deg) scale(1.17871, 1.17871);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.1685s; transform-origin: 0px 0px 1087.32px; transform: translate3d(0px, 0px, -1087.32px) rotateY(172.304deg) rotateX(-13.4409deg) scale(1.00297, 1.00297);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.84503s; transform-origin: 0px 0px 943.102px; transform: translate3d(0px, 0px, -943.102px) rotateY(78.3515deg) rotateX(-3.75501deg) scale(0.622243, 0.622243);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.16893s; transform-origin: 0px 0px 1053.96px; transform: translate3d(0px, 0px, -1053.96px) rotateY(142.668deg) rotateX(-35.1713deg) scale(1.11598, 1.11598);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.74868s; transform-origin: 0px 0px 960.617px; transform: translate3d(0px, 0px, -960.617px) rotateY(98.0002deg) rotateX(-18.2502deg) scale(0.813938, 0.813938);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.451252s; transform-origin: 0px 0px 970.473px; transform: translate3d(0px, 0px, -970.473px) rotateY(250.536deg) rotateX(-15.9415deg) scale(0.386064, 0.386064);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.60594s; transform-origin: 0px 0px 919.76px; transform: translate3d(0px, 0px, -919.76px) rotateY(96.8312deg) rotateX(-14.2993deg) scale(1.09717, 1.09717);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.56278s; transform-origin: 0px 0px 992.317px; transform: translate3d(0px, 0px, -992.317px) rotateY(347.293deg) rotateX(-15.8315deg) scale(0.594508, 0.594508);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.38825s; transform-origin: 0px 0px 1025.45px; transform: translate3d(0px, 0px, -1025.45px) rotateY(46.9607deg) rotateX(-13.8791deg) scale(0.891358, 0.891358);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.11591s; transform-origin: 0px 0px 980.731px; transform: translate3d(0px, 0px, -980.731px) rotateY(61.1423deg) rotateX(-35.1004deg) scale(0.610724, 0.610724);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.49233s; transform-origin: 0px 0px 904.488px; transform: translate3d(0px, 0px, -904.488px) rotateY(10.4667deg) rotateX(-15.8281deg) scale(0.944807, 0.944807);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.52964s; transform-origin: 0px 0px 906.053px; transform: translate3d(0px, 0px, -906.053px) rotateY(15.1468deg) rotateX(-47.6554deg) scale(1.19199, 1.19199);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.90472s; transform-origin: 0px 0px 838.237px; transform: translate3d(0px, 0px, -838.237px) rotateY(82.5921deg) rotateX(-14.1187deg) scale(0.899193, 0.899193);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.02596s; transform-origin: 0px 0px 976.31px; transform: translate3d(0px, 0px, -976.31px) rotateY(313.296deg) rotateX(-0.0169839deg) scale(0.653416, 0.653416);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.73257s; transform-origin: 0px 0px 984.352px; transform: translate3d(0px, 0px, -984.352px) rotateY(29.3714deg) rotateX(-35.3666deg) scale(0.537832, 0.537832);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.39466s; transform-origin: 0px 0px 811.939px; transform: translate3d(0px, 0px, -811.939px) rotateY(23.5341deg) rotateX(-3.6153deg) scale(0.755106, 0.755106);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.71286s; transform-origin: 0px 0px 1040.59px; transform: translate3d(0px, 0px, -1040.59px) rotateY(14.5099deg) rotateX(-14.752deg) scale(0.593267, 0.593267);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.758874s; transform-origin: 0px 0px 813.414px; transform: translate3d(0px, 0px, -813.414px) rotateY(351.557deg) rotateX(-30.9754deg) scale(0.667499, 0.667499);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.78319s; transform-origin: 0px 0px 914.266px; transform: translate3d(0px, 0px, -914.266px) rotateY(349.987deg) rotateX(-24.4904deg) scale(0.791195, 0.791195);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.90771s; transform-origin: 0px 0px 975.211px; transform: translate3d(0px, 0px, -975.211px) rotateY(158.95deg) rotateX(-34.0035deg) scale(1.14888, 1.14888);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.1028s; transform-origin: 0px 0px 887.741px; transform: translate3d(0px, 0px, -887.741px) rotateY(318.658deg) rotateX(-42.3616deg) scale(0.664062, 0.664062);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.06953s; transform-origin: 0px 0px 921.674px; transform: translate3d(0px, 0px, -921.674px) rotateY(183.234deg) rotateX(-8.28246deg) scale(0.400156, 0.400156);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.80228s; transform-origin: 0px 0px 1037.44px; transform: translate3d(0px, 0px, -1037.44px) rotateY(126.463deg) rotateX(-29.9545deg) scale(0.54141, 0.54141);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.313115s; transform-origin: 0px 0px 910.125px; transform: translate3d(0px, 0px, -910.125px) rotateY(102.764deg) rotateX(-45.1661deg) scale(0.610579, 0.610579);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.06676s; transform-origin: 0px 0px 888.207px; transform: translate3d(0px, 0px, -888.207px) rotateY(349.261deg) rotateX(-3.99183deg) scale(0.680762, 0.680762);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.7313s; transform-origin: 0px 0px 953.961px; transform: translate3d(0px, 0px, -953.961px) rotateY(321.418deg) rotateX(-18.0493deg) scale(0.949523, 0.949523);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.1673s; transform-origin: 0px 0px 1004.34px; transform: translate3d(0px, 0px, -1004.34px) rotateY(93.2502deg) rotateX(-28.1401deg) scale(0.647189, 0.647189);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.79926s; transform-origin: 0px 0px 953.965px; transform: translate3d(0px, 0px, -953.965px) rotateY(340.561deg) rotateX(-38.4132deg) scale(1.15357, 1.15357);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.327s; transform-origin: 0px 0px 888.538px; transform: translate3d(0px, 0px, -888.538px) rotateY(357.912deg) rotateX(-28.9802deg) scale(0.844546, 0.844546);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.777854s; transform-origin: 0px 0px 1043.84px; transform: translate3d(0px, 0px, -1043.84px) rotateY(159.39deg) rotateX(-36.0202deg) scale(0.769872, 0.769872);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.651305s; transform-origin: 0px 0px 1022.2px; transform: translate3d(0px, 0px, -1022.2px) rotateY(241.773deg) rotateX(-16.4953deg) scale(0.254609, 0.254609);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.21689s; transform-origin: 0px 0px 833.542px; transform: translate3d(0px, 0px, -833.542px) rotateY(258.201deg) rotateX(-29.852deg) scale(0.988406, 0.988406);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.38205s; transform-origin: 0px 0px 843.096px; transform: translate3d(0px, 0px, -843.096px) rotateY(349.217deg) rotateX(-1.49758deg) scale(0.848449, 0.848449);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.2995s; transform-origin: 0px 0px 825.796px; transform: translate3d(0px, 0px, -825.796px) rotateY(219.74deg) rotateX(-31.5441deg) scale(0.250302, 0.250302);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.61043s; transform-origin: 0px 0px 1038.93px; transform: translate3d(0px, 0px, -1038.93px) rotateY(140.924deg) rotateX(-8.22238deg) scale(0.800782, 0.800782);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.90735s; transform-origin: 0px 0px 1052.08px; transform: translate3d(0px, 0px, -1052.08px) rotateY(145.625deg) rotateX(-23.4489deg) scale(1.13563, 1.13563);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.49057s; transform-origin: 0px 0px 1091.64px; transform: translate3d(0px, 0px, -1091.64px) rotateY(15.6998deg) rotateX(-31.1099deg) scale(0.272225, 0.272225);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.84526s; transform-origin: 0px 0px 976.8px; transform: translate3d(0px, 0px, -976.8px) rotateY(57.818deg) rotateX(-1.56909deg) scale(0.363315, 0.363315);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.89776s; transform-origin: 0px 0px 1090.53px; transform: translate3d(0px, 0px, -1090.53px) rotateY(32.0826deg) rotateX(-0.422985deg) scale(0.82006, 0.82006);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.45152s; transform-origin: 0px 0px 828.178px; transform: translate3d(0px, 0px, -828.178px) rotateY(98.5684deg) rotateX(-22.9601deg) scale(0.904639, 0.904639);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.67474s; transform-origin: 0px 0px 893.983px; transform: translate3d(0px, 0px, -893.983px) rotateY(128.699deg) rotateX(-3.14213deg) scale(0.72525, 0.72525);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.93422s; transform-origin: 0px 0px 958.93px; transform: translate3d(0px, 0px, -958.93px) rotateY(301.123deg) rotateX(-27.1667deg) scale(0.340123, 0.340123);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.79319s; transform-origin: 0px 0px 909.188px; transform: translate3d(0px, 0px, -909.188px) rotateY(37.6469deg) rotateX(-2.97179deg) scale(0.251713, 0.251713);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.65459s; transform-origin: 0px 0px 872.675px; transform: translate3d(0px, 0px, -872.675px) rotateY(202.525deg) rotateX(-16.7407deg) scale(0.770344, 0.770344);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.90694s; transform-origin: 0px 0px 1070.77px; transform: translate3d(0px, 0px, -1070.77px) rotateY(56.7623deg) rotateX(-40.0587deg) scale(0.312402, 0.312402);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.3742s; transform-origin: 0px 0px 879.39px; transform: translate3d(0px, 0px, -879.39px) rotateY(238.35deg) rotateX(-3.43405deg) scale(0.274312, 0.274312);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.378496s; transform-origin: 0px 0px 1010.11px; transform: translate3d(0px, 0px, -1010.11px) rotateY(280.115deg) rotateX(-40.3085deg) scale(0.596384, 0.596384);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.96839s; transform-origin: 0px 0px 991.527px; transform: translate3d(0px, 0px, -991.527px) rotateY(26.9974deg) rotateX(-13.7307deg) scale(0.468835, 0.468835);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.09562s; transform-origin: 0px 0px 905.013px; transform: translate3d(0px, 0px, -905.013px) rotateY(62.9278deg) rotateX(-3.84945deg) scale(0.971678, 0.971678);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.48937s; transform-origin: 0px 0px 868.824px; transform: translate3d(0px, 0px, -868.824px) rotateY(316.092deg) rotateX(-35.193deg) scale(0.831618, 0.831618);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.93099s; transform-origin: 0px 0px 1050.59px; transform: translate3d(0px, 0px, -1050.59px) rotateY(10.7094deg) rotateX(-39.845deg) scale(0.27752, 0.27752);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.66976s; transform-origin: 0px 0px 840.077px; transform: translate3d(0px, 0px, -840.077px) rotateY(348.545deg) rotateX(-35.3587deg) scale(0.435569, 0.435569);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.36257s; transform-origin: 0px 0px 820.984px; transform: translate3d(0px, 0px, -820.984px) rotateY(44.5034deg) rotateX(-25.6896deg) scale(0.980905, 0.980905);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.43593s; transform-origin: 0px 0px 1011.44px; transform: translate3d(0px, 0px, -1011.44px) rotateY(52.7976deg) rotateX(-28.444deg) scale(0.835094, 0.835094);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.69382s; transform-origin: 0px 0px 839.095px; transform: translate3d(0px, 0px, -839.095px) rotateY(62.0884deg) rotateX(-22.9885deg) scale(0.976155, 0.976155);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.66721s; transform-origin: 0px 0px 970.97px; transform: translate3d(0px, 0px, -970.97px) rotateY(146.832deg) rotateX(-48.6539deg) scale(0.646332, 0.646332);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.65064s; transform-origin: 0px 0px 950.493px; transform: translate3d(0px, 0px, -950.493px) rotateY(19.4727deg) rotateX(-9.01625deg) scale(0.445847, 0.445847);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.432137s; transform-origin: 0px 0px 1031.47px; transform: translate3d(0px, 0px, -1031.47px) rotateY(84.1779deg) rotateX(-7.01588deg) scale(0.357319, 0.357319);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.83799s; transform-origin: 0px 0px 814.771px; transform: translate3d(0px, 0px, -814.771px) rotateY(111.46deg) rotateX(-49.0361deg) scale(1.12707, 1.12707);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.94286s; transform-origin: 0px 0px 998.181px; transform: translate3d(0px, 0px, -998.181px) rotateY(52.3228deg) rotateX(-27.4171deg) scale(0.71034, 0.71034);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.8171s; transform-origin: 0px 0px 889.353px; transform: translate3d(0px, 0px, -889.353px) rotateY(150.983deg) rotateX(-14.9487deg) scale(0.398978, 0.398978);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.35564s; transform-origin: 0px 0px 926.86px; transform: translate3d(0px, 0px, -926.86px) rotateY(58.6559deg) rotateX(-1.96343deg) scale(1.02696, 1.02696);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.56532s; transform-origin: 0px 0px 1022.25px; transform: translate3d(0px, 0px, -1022.25px) rotateY(271.95deg) rotateX(-2.06301deg) scale(1.0731, 1.0731);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.98184s; transform-origin: 0px 0px 941.171px; transform: translate3d(0px, 0px, -941.171px) rotateY(121.164deg) rotateX(-26.1848deg) scale(0.91463, 0.91463);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.42313s; transform-origin: 0px 0px 1066.14px; transform: translate3d(0px, 0px, -1066.14px) rotateY(14.3646deg) rotateX(-12.8318deg) scale(0.215332, 0.215332);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.3302s; transform-origin: 0px 0px 1037.2px; transform: translate3d(0px, 0px, -1037.2px) rotateY(156.023deg) rotateX(-46.2684deg) scale(0.653396, 0.653396);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.624742s; transform-origin: 0px 0px 838.267px; transform: translate3d(0px, 0px, -838.267px) rotateY(187.184deg) rotateX(-28.7234deg) scale(0.737078, 0.737078);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.64617s; transform-origin: 0px 0px 952.996px; transform: translate3d(0px, 0px, -952.996px) rotateY(135.255deg) rotateX(-37.924deg) scale(0.547959, 0.547959);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.23675s; transform-origin: 0px 0px 814.995px; transform: translate3d(0px, 0px, -814.995px) rotateY(41.8521deg) rotateX(-29.1406deg) scale(1.03465, 1.03465);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.37711s; transform-origin: 0px 0px 1029.84px; transform: translate3d(0px, 0px, -1029.84px) rotateY(189.619deg) rotateX(-23.4792deg) scale(0.207592, 0.207592);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.03978s; transform-origin: 0px 0px 882.869px; transform: translate3d(0px, 0px, -882.869px) rotateY(334.269deg) rotateX(-24.4215deg) scale(1.05535, 1.05535);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.80531s; transform-origin: 0px 0px 958.773px; transform: translate3d(0px, 0px, -958.773px) rotateY(296.11deg) rotateX(-35.4443deg) scale(0.849165, 0.849165);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.23576s; transform-origin: 0px 0px 891.688px; transform: translate3d(0px, 0px, -891.688px) rotateY(159.331deg) rotateX(-40.7833deg) scale(0.962509, 0.962509);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.73655s; transform-origin: 0px 0px 856.082px; transform: translate3d(0px, 0px, -856.082px) rotateY(348.201deg) rotateX(-28.4657deg) scale(0.993357, 0.993357);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.64549s; transform-origin: 0px 0px 1060.74px; transform: translate3d(0px, 0px, -1060.74px) rotateY(30.6468deg) rotateX(-11.5937deg) scale(0.363867, 0.363867);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.7304s; transform-origin: 0px 0px 1028.92px; transform: translate3d(0px, 0px, -1028.92px) rotateY(97.6143deg) rotateX(-47.1967deg) scale(0.820862, 0.820862);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.74737s; transform-origin: 0px 0px 1012.57px; transform: translate3d(0px, 0px, -1012.57px) rotateY(217.081deg) rotateX(-7.35616deg) scale(1.06831, 1.06831);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.02485s; transform-origin: 0px 0px 976.56px; transform: translate3d(0px, 0px, -976.56px) rotateY(103.195deg) rotateX(-46.7496deg) scale(0.596959, 0.596959);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.67175s; transform-origin: 0px 0px 887.494px; transform: translate3d(0px, 0px, -887.494px) rotateY(256.251deg) rotateX(-6.42698deg) scale(0.402701, 0.402701);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.46396s; transform-origin: 0px 0px 914.171px; transform: translate3d(0px, 0px, -914.171px) rotateY(319.516deg) rotateX(-12.4602deg) scale(0.553603, 0.553603);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.998388s; transform-origin: 0px 0px 806.602px; transform: translate3d(0px, 0px, -806.602px) rotateY(95.1374deg) rotateX(-38.7432deg) scale(0.67432, 0.67432);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.70105s; transform-origin: 0px 0px 814.432px; transform: translate3d(0px, 0px, -814.432px) rotateY(241.224deg) rotateX(-29.4999deg) scale(1.11644, 1.11644);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.81597s; transform-origin: 0px 0px 954.327px; transform: translate3d(0px, 0px, -954.327px) rotateY(189.122deg) rotateX(-28.6462deg) scale(0.89012, 0.89012);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.76156s; transform-origin: 0px 0px 1093.77px; transform: translate3d(0px, 0px, -1093.77px) rotateY(91.6129deg) rotateX(-22.5707deg) scale(0.530729, 0.530729);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.55552s; transform-origin: 0px 0px 874.285px; transform: translate3d(0px, 0px, -874.285px) rotateY(234.995deg) rotateX(-6.12496deg) scale(0.583483, 0.583483);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.67533s; transform-origin: 0px 0px 885.129px; transform: translate3d(0px, 0px, -885.129px) rotateY(33.9742deg) rotateX(-22.3841deg) scale(0.600423, 0.600423);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.47525s; transform-origin: 0px 0px 952.324px; transform: translate3d(0px, 0px, -952.324px) rotateY(72.1496deg) rotateX(-3.43062deg) scale(0.7249, 0.7249);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.66073s; transform-origin: 0px 0px 861.759px; transform: translate3d(0px, 0px, -861.759px) rotateY(186.926deg) rotateX(-33.349deg) scale(0.871432, 0.871432);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.07599s; transform-origin: 0px 0px 938.208px; transform: translate3d(0px, 0px, -938.208px) rotateY(116.806deg) rotateX(-24.5482deg) scale(0.567909, 0.567909);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.68741s; transform-origin: 0px 0px 895.43px; transform: translate3d(0px, 0px, -895.43px) rotateY(357.145deg) rotateX(-8.44756deg) scale(0.392214, 0.392214);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.84071s; transform-origin: 0px 0px 803.641px; transform: translate3d(0px, 0px, -803.641px) rotateY(258.482deg) rotateX(-8.17727deg) scale(0.442014, 0.442014);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.3513s; transform-origin: 0px 0px 970.639px; transform: translate3d(0px, 0px, -970.639px) rotateY(117.784deg) rotateX(-12.1471deg) scale(1.06549, 1.06549);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.48914s; transform-origin: 0px 0px 847.458px; transform: translate3d(0px, 0px, -847.458px) rotateY(116.31deg) rotateX(-20.8631deg) scale(0.422624, 0.422624);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.3162s; transform-origin: 0px 0px 1012.46px; transform: translate3d(0px, 0px, -1012.46px) rotateY(105.834deg) rotateX(-17.8142deg) scale(1.19466, 1.19466);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.93968s; transform-origin: 0px 0px 950.2px; transform: translate3d(0px, 0px, -950.2px) rotateY(6.97684deg) rotateX(-34.9233deg) scale(0.22561, 0.22561);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.547222s; transform-origin: 0px 0px 1001.06px; transform: translate3d(0px, 0px, -1001.06px) rotateY(225.584deg) rotateX(-17.7271deg) scale(0.255873, 0.255873);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.13646s; transform-origin: 0px 0px 886.918px; transform: translate3d(0px, 0px, -886.918px) rotateY(240.953deg) rotateX(-17.0965deg) scale(0.508819, 0.508819);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.00583s; transform-origin: 0px 0px 1079.38px; transform: translate3d(0px, 0px, -1079.38px) rotateY(271.841deg) rotateX(-5.38582deg) scale(0.472614, 0.472614);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.74409s; transform-origin: 0px 0px 907.543px; transform: translate3d(0px, 0px, -907.543px) rotateY(330.736deg) rotateX(-5.41246deg) scale(0.730297, 0.730297);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.490785s; transform-origin: 0px 0px 940.354px; transform: translate3d(0px, 0px, -940.354px) rotateY(9.1827deg) rotateX(-43.9477deg) scale(1.03996, 1.03996);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.69019s; transform-origin: 0px 0px 815.338px; transform: translate3d(0px, 0px, -815.338px) rotateY(273.067deg) rotateX(-37.8781deg) scale(1.08306, 1.08306);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.25309s; transform-origin: 0px 0px 879.431px; transform: translate3d(0px, 0px, -879.431px) rotateY(56.4349deg) rotateX(-6.9625deg) scale(0.232067, 0.232067);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.90518s; transform-origin: 0px 0px 903.906px; transform: translate3d(0px, 0px, -903.906px) rotateY(309.581deg) rotateX(-44.4541deg) scale(0.575586, 0.575586);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.53147s; transform-origin: 0px 0px 865.864px; transform: translate3d(0px, 0px, -865.864px) rotateY(146.2deg) rotateX(-33.0276deg) scale(0.358593, 0.358593);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.68325s; transform-origin: 0px 0px 983.008px; transform: translate3d(0px, 0px, -983.008px) rotateY(339.805deg) rotateX(-27.8974deg) scale(0.980959, 0.980959);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.78751s; transform-origin: 0px 0px 993.213px; transform: translate3d(0px, 0px, -993.213px) rotateY(82.5954deg) rotateX(-28.2089deg) scale(0.725947, 0.725947);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.39469s; transform-origin: 0px 0px 1097.87px; transform: translate3d(0px, 0px, -1097.87px) rotateY(328.869deg) rotateX(-1.7408deg) scale(0.600036, 0.600036);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.67104s; transform-origin: 0px 0px 1006.63px; transform: translate3d(0px, 0px, -1006.63px) rotateY(95.155deg) rotateX(-48.8881deg) scale(0.693367, 0.693367);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.42468s; transform-origin: 0px 0px 901.297px; transform: translate3d(0px, 0px, -901.297px) rotateY(207.061deg) rotateX(-21.3103deg) scale(0.686002, 0.686002);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.59618s; transform-origin: 0px 0px 875.907px; transform: translate3d(0px, 0px, -875.907px) rotateY(18.579deg) rotateX(-40.5252deg) scale(1.0484, 1.0484);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.66742s; transform-origin: 0px 0px 818.299px; transform: translate3d(0px, 0px, -818.299px) rotateY(88.3201deg) rotateX(-39.2914deg) scale(0.919318, 0.919318);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.92306s; transform-origin: 0px 0px 1062.47px; transform: translate3d(0px, 0px, -1062.47px) rotateY(205.112deg) rotateX(-27.9341deg) scale(0.885242, 0.885242);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.68495s; transform-origin: 0px 0px 858.823px; transform: translate3d(0px, 0px, -858.823px) rotateY(345.068deg) rotateX(-34.1576deg) scale(1.14594, 1.14594);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.1168s; transform-origin: 0px 0px 942.857px; transform: translate3d(0px, 0px, -942.857px) rotateY(74.6235deg) rotateX(-7.87083deg) scale(0.232917, 0.232917);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.07762s; transform-origin: 0px 0px 840.261px; transform: translate3d(0px, 0px, -840.261px) rotateY(95.3893deg) rotateX(-31.2131deg) scale(0.882645, 0.882645);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.29499s; transform-origin: 0px 0px 1011.66px; transform: translate3d(0px, 0px, -1011.66px) rotateY(304.651deg) rotateX(-8.2393deg) scale(0.484373, 0.484373);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.05599s; transform-origin: 0px 0px 1094.56px; transform: translate3d(0px, 0px, -1094.56px) rotateY(319.979deg) rotateX(-25.1432deg) scale(1.13991, 1.13991);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.909401s; transform-origin: 0px 0px 834.955px; transform: translate3d(0px, 0px, -834.955px) rotateY(250.8deg) rotateX(-8.29097deg) scale(0.226269, 0.226269);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.29474s; transform-origin: 0px 0px 841.382px; transform: translate3d(0px, 0px, -841.382px) rotateY(344.817deg) rotateX(-23.6053deg) scale(0.27318, 0.27318);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.70912s; transform-origin: 0px 0px 1004.7px; transform: translate3d(0px, 0px, -1004.7px) rotateY(211.365deg) rotateX(-33.9847deg) scale(0.804306, 0.804306);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.32385s; transform-origin: 0px 0px 1075.96px; transform: translate3d(0px, 0px, -1075.96px) rotateY(68.3871deg) rotateX(-34.0061deg) scale(0.659153, 0.659153);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.264805s; transform-origin: 0px 0px 1038.02px; transform: translate3d(0px, 0px, -1038.02px) rotateY(56.9928deg) rotateX(-18.3131deg) scale(0.641831, 0.641831);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.17066s; transform-origin: 0px 0px 896.159px; transform: translate3d(0px, 0px, -896.159px) rotateY(248.438deg) rotateX(-23.6017deg) scale(1.0054, 1.0054);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.57944s; transform-origin: 0px 0px 823.213px; transform: translate3d(0px, 0px, -823.213px) rotateY(146.662deg) rotateX(-48.6014deg) scale(1.11367, 1.11367);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.36534s; transform-origin: 0px 0px 918.046px; transform: translate3d(0px, 0px, -918.046px) rotateY(284.058deg) rotateX(-34.3614deg) scale(0.275612, 0.275612);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.39177s; transform-origin: 0px 0px 870.336px; transform: translate3d(0px, 0px, -870.336px) rotateY(263.515deg) rotateX(-45.8175deg) scale(0.586443, 0.586443);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.45674s; transform-origin: 0px 0px 1081.35px; transform: translate3d(0px, 0px, -1081.35px) rotateY(302.991deg) rotateX(-47.638deg) scale(1.00788, 1.00788);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.91884s; transform-origin: 0px 0px 1017.74px; transform: translate3d(0px, 0px, -1017.74px) rotateY(98.9138deg) rotateX(-21.1958deg) scale(0.986793, 0.986793);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.61381s; transform-origin: 0px 0px 980.421px; transform: translate3d(0px, 0px, -980.421px) rotateY(105.313deg) rotateX(-26.4863deg) scale(0.635914, 0.635914);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.473816s; transform-origin: 0px 0px 860.99px; transform: translate3d(0px, 0px, -860.99px) rotateY(144.575deg) rotateX(-14.7735deg) scale(0.900411, 0.900411);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.37793s; transform-origin: 0px 0px 947.031px; transform: translate3d(0px, 0px, -947.031px) rotateY(337.904deg) rotateX(-16.7414deg) scale(0.838426, 0.838426);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.96263s; transform-origin: 0px 0px 1037.22px; transform: translate3d(0px, 0px, -1037.22px) rotateY(179.473deg) rotateX(-16.0418deg) scale(1.01962, 1.01962);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.31298s; transform-origin: 0px 0px 828.842px; transform: translate3d(0px, 0px, -828.842px) rotateY(307.377deg) rotateX(-25.6508deg) scale(0.357123, 0.357123);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.4189s; transform-origin: 0px 0px 895.01px; transform: translate3d(0px, 0px, -895.01px) rotateY(50.2071deg) rotateX(-18.7832deg) scale(0.224867, 0.224867);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.46727s; transform-origin: 0px 0px 970.06px; transform: translate3d(0px, 0px, -970.06px) rotateY(24.3473deg) rotateX(-24.8322deg) scale(0.816707, 0.816707);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.54209s; transform-origin: 0px 0px 987.311px; transform: translate3d(0px, 0px, -987.311px) rotateY(183.821deg) rotateX(-27.0911deg) scale(0.313226, 0.313226);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.33933s; transform-origin: 0px 0px 861.201px; transform: translate3d(0px, 0px, -861.201px) rotateY(99.8962deg) rotateX(-7.98341deg) scale(1.14827, 1.14827);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.00245s; transform-origin: 0px 0px 826.015px; transform: translate3d(0px, 0px, -826.015px) rotateY(331.388deg) rotateX(-30.0609deg) scale(0.793379, 0.793379);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.84648s; transform-origin: 0px 0px 1031.03px; transform: translate3d(0px, 0px, -1031.03px) rotateY(31.9036deg) rotateX(-16.9019deg) scale(1.06043, 1.06043);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.48107s; transform-origin: 0px 0px 1043.72px; transform: translate3d(0px, 0px, -1043.72px) rotateY(350.906deg) rotateX(-31.3609deg) scale(0.531429, 0.531429);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.11313s; transform-origin: 0px 0px 1020.82px; transform: translate3d(0px, 0px, -1020.82px) rotateY(152.81deg) rotateX(-24.4855deg) scale(0.884018, 0.884018);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.61692s; transform-origin: 0px 0px 886.802px; transform: translate3d(0px, 0px, -886.802px) rotateY(2.61337deg) rotateX(-12.6898deg) scale(0.573794, 0.573794);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.76359s; transform-origin: 0px 0px 1080.88px; transform: translate3d(0px, 0px, -1080.88px) rotateY(348.815deg) rotateX(-25.8737deg) scale(0.319959, 0.319959);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.43852s; transform-origin: 0px 0px 973.594px; transform: translate3d(0px, 0px, -973.594px) rotateY(302.857deg) rotateX(-7.46101deg) scale(0.997059, 0.997059);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.60068s; transform-origin: 0px 0px 810.827px; transform: translate3d(0px, 0px, -810.827px) rotateY(133.016deg) rotateX(-0.717432deg) scale(0.889153, 0.889153);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.3982s; transform-origin: 0px 0px 872.601px; transform: translate3d(0px, 0px, -872.601px) rotateY(344.273deg) rotateX(-19.9276deg) scale(0.954901, 0.954901);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.55033s; transform-origin: 0px 0px 1014.24px; transform: translate3d(0px, 0px, -1014.24px) rotateY(80.7332deg) rotateX(-29.8135deg) scale(0.484189, 0.484189);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.80724s; transform-origin: 0px 0px 1058.91px; transform: translate3d(0px, 0px, -1058.91px) rotateY(235.526deg) rotateX(-24.2272deg) scale(0.535927, 0.535927);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.48129s; transform-origin: 0px 0px 1096.41px; transform: translate3d(0px, 0px, -1096.41px) rotateY(195.673deg) rotateX(-29.1577deg) scale(1.1204, 1.1204);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.40819s; transform-origin: 0px 0px 1002.68px; transform: translate3d(0px, 0px, -1002.68px) rotateY(114.399deg) rotateX(-39.5917deg) scale(1.06346, 1.06346);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.5361s; transform-origin: 0px 0px 1045.31px; transform: translate3d(0px, 0px, -1045.31px) rotateY(148.532deg) rotateX(-29.2172deg) scale(0.464659, 0.464659);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.59571s; transform-origin: 0px 0px 839.638px; transform: translate3d(0px, 0px, -839.638px) rotateY(346.437deg) rotateX(-24.3502deg) scale(0.243107, 0.243107);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.75234s; transform-origin: 0px 0px 821.253px; transform: translate3d(0px, 0px, -821.253px) rotateY(264.994deg) rotateX(-28.2604deg) scale(0.53961, 0.53961);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.77909s; transform-origin: 0px 0px 803.269px; transform: translate3d(0px, 0px, -803.269px) rotateY(307.901deg) rotateX(-45.5208deg) scale(0.243051, 0.243051);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.70761s; transform-origin: 0px 0px 1096.46px; transform: translate3d(0px, 0px, -1096.46px) rotateY(127.011deg) rotateX(-6.20903deg) scale(0.293491, 0.293491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.01129s; transform-origin: 0px 0px 1028.42px; transform: translate3d(0px, 0px, -1028.42px) rotateY(4.25382deg) rotateX(-42.7877deg) scale(0.440547, 0.440547);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.98982s; transform-origin: 0px 0px 898.64px; transform: translate3d(0px, 0px, -898.64px) rotateY(232.094deg) rotateX(-9.40769deg) scale(0.376546, 0.376546);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.39957s; transform-origin: 0px 0px 831.919px; transform: translate3d(0px, 0px, -831.919px) rotateY(15.9584deg) rotateX(-4.77894deg) scale(0.78498, 0.78498);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.89462s; transform-origin: 0px 0px 1032.71px; transform: translate3d(0px, 0px, -1032.71px) rotateY(76.1034deg) rotateX(-40.3539deg) scale(0.473905, 0.473905);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.0663s; transform-origin: 0px 0px 944.752px; transform: translate3d(0px, 0px, -944.752px) rotateY(95.2849deg) rotateX(-9.3768deg) scale(0.366928, 0.366928);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.92269s; transform-origin: 0px 0px 945.238px; transform: translate3d(0px, 0px, -945.238px) rotateY(336.696deg) rotateX(-20.3427deg) scale(1.1813, 1.1813);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.55951s; transform-origin: 0px 0px 875.528px; transform: translate3d(0px, 0px, -875.528px) rotateY(132.151deg) rotateX(-47.5263deg) scale(1.01384, 1.01384);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.438321s; transform-origin: 0px 0px 832.664px; transform: translate3d(0px, 0px, -832.664px) rotateY(141.576deg) rotateX(-14.9283deg) scale(0.381809, 0.381809);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.5139s; transform-origin: 0px 0px 942.444px; transform: translate3d(0px, 0px, -942.444px) rotateY(46.6783deg) rotateX(-49.4611deg) scale(0.522803, 0.522803);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.49169s; transform-origin: 0px 0px 883.028px; transform: translate3d(0px, 0px, -883.028px) rotateY(198.005deg) rotateX(-26.3863deg) scale(0.741451, 0.741451);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.25307s; transform-origin: 0px 0px 1023.41px; transform: translate3d(0px, 0px, -1023.41px) rotateY(120.618deg) rotateX(-46.5067deg) scale(0.767526, 0.767526);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.79123s; transform-origin: 0px 0px 869.469px; transform: translate3d(0px, 0px, -869.469px) rotateY(282.88deg) rotateX(-36.1029deg) scale(0.816368, 0.816368);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.29799s; transform-origin: 0px 0px 1014.29px; transform: translate3d(0px, 0px, -1014.29px) rotateY(8.13962deg) rotateX(-13.8549deg) scale(0.930888, 0.930888);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.35993s; transform-origin: 0px 0px 964.731px; transform: translate3d(0px, 0px, -964.731px) rotateY(57.4975deg) rotateX(-39.0237deg) scale(0.937709, 0.937709);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.06942s; transform-origin: 0px 0px 989.809px; transform: translate3d(0px, 0px, -989.809px) rotateY(147.67deg) rotateX(-40.6113deg) scale(0.987642, 0.987642);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.39391s; transform-origin: 0px 0px 1065.98px; transform: translate3d(0px, 0px, -1065.98px) rotateY(216.259deg) rotateX(-30.8977deg) scale(0.525607, 0.525607);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.7243s; transform-origin: 0px 0px 977.105px; transform: translate3d(0px, 0px, -977.105px) rotateY(87.5195deg) rotateX(-3.34949deg) scale(0.867059, 0.867059);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.68425s; transform-origin: 0px 0px 967.2px; transform: translate3d(0px, 0px, -967.2px) rotateY(276.457deg) rotateX(-42.3605deg) scale(0.683498, 0.683498);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.03753s; transform-origin: 0px 0px 986.386px; transform: translate3d(0px, 0px, -986.386px) rotateY(82.2449deg) rotateX(-46.5349deg) scale(0.317505, 0.317505);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.66146s; transform-origin: 0px 0px 926.008px; transform: translate3d(0px, 0px, -926.008px) rotateY(75.5837deg) rotateX(-22.904deg) scale(0.427295, 0.427295);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.12257s; transform-origin: 0px 0px 882.53px; transform: translate3d(0px, 0px, -882.53px) rotateY(190.728deg) rotateX(-14.3885deg) scale(0.872552, 0.872552);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.21405s; transform-origin: 0px 0px 993.203px; transform: translate3d(0px, 0px, -993.203px) rotateY(145.403deg) rotateX(-28.5171deg) scale(0.819048, 0.819048);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.350797s; transform-origin: 0px 0px 1071.39px; transform: translate3d(0px, 0px, -1071.39px) rotateY(350.598deg) rotateX(-27.746deg) scale(0.260109, 0.260109);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.63759s; transform-origin: 0px 0px 918.778px; transform: translate3d(0px, 0px, -918.778px) rotateY(358.636deg) rotateX(-24.9435deg) scale(0.806783, 0.806783);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.349601s; transform-origin: 0px 0px 1013.1px; transform: translate3d(0px, 0px, -1013.1px) rotateY(219.953deg) rotateX(-46.8237deg) scale(0.746074, 0.746074);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.96476s; transform-origin: 0px 0px 1006.5px; transform: translate3d(0px, 0px, -1006.5px) rotateY(42.4916deg) rotateX(-20.7138deg) scale(0.400425, 0.400425);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.60863s; transform-origin: 0px 0px 983.756px; transform: translate3d(0px, 0px, -983.756px) rotateY(122.127deg) rotateX(-25.5156deg) scale(0.884098, 0.884098);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.6402s; transform-origin: 0px 0px 820.116px; transform: translate3d(0px, 0px, -820.116px) rotateY(330.243deg) rotateX(-11.4665deg) scale(0.825954, 0.825954);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.63758s; transform-origin: 0px 0px 1030.73px; transform: translate3d(0px, 0px, -1030.73px) rotateY(312.179deg) rotateX(-23.6365deg) scale(0.39448, 0.39448);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.30689s; transform-origin: 0px 0px 984.869px; transform: translate3d(0px, 0px, -984.869px) rotateY(340.734deg) rotateX(-43.0546deg) scale(0.602412, 0.602412);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.78845s; transform-origin: 0px 0px 966.07px; transform: translate3d(0px, 0px, -966.07px) rotateY(190.793deg) rotateX(-32.8989deg) scale(0.833298, 0.833298);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.61839s; transform-origin: 0px 0px 882.919px; transform: translate3d(0px, 0px, -882.919px) rotateY(344.423deg) rotateX(-1.09926deg) scale(0.400669, 0.400669);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.898085s; transform-origin: 0px 0px 911.973px; transform: translate3d(0px, 0px, -911.973px) rotateY(89.1701deg) rotateX(-49.6879deg) scale(0.444438, 0.444438);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.69852s; transform-origin: 0px 0px 929.952px; transform: translate3d(0px, 0px, -929.952px) rotateY(87.9362deg) rotateX(-34.5613deg) scale(0.347358, 0.347358);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.6712s; transform-origin: 0px 0px 977.876px; transform: translate3d(0px, 0px, -977.876px) rotateY(275.598deg) rotateX(-21.7776deg) scale(0.234972, 0.234972);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.93468s; transform-origin: 0px 0px 970.709px; transform: translate3d(0px, 0px, -970.709px) rotateY(122.653deg) rotateX(-20.6302deg) scale(1.19678, 1.19678);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.58446s; transform-origin: 0px 0px 875.407px; transform: translate3d(0px, 0px, -875.407px) rotateY(310.401deg) rotateX(-48.776deg) scale(0.82866, 0.82866);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.57818s; transform-origin: 0px 0px 1020.33px; transform: translate3d(0px, 0px, -1020.33px) rotateY(229.451deg) rotateX(-24.1101deg) scale(0.889249, 0.889249);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.93234s; transform-origin: 0px 0px 838.614px; transform: translate3d(0px, 0px, -838.614px) rotateY(102.839deg) rotateX(-1.93967deg) scale(0.484386, 0.484386);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.3598s; transform-origin: 0px 0px 998.019px; transform: translate3d(0px, 0px, -998.019px) rotateY(169.974deg) rotateX(-34.7479deg) scale(1.01332, 1.01332);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.858978s; transform-origin: 0px 0px 833.881px; transform: translate3d(0px, 0px, -833.881px) rotateY(191.175deg) rotateX(-17.9182deg) scale(0.773321, 0.773321);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.678177s; transform-origin: 0px 0px 868.196px; transform: translate3d(0px, 0px, -868.196px) rotateY(352.556deg) rotateX(-19.7108deg) scale(1.00547, 1.00547);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.07412s; transform-origin: 0px 0px 832.118px; transform: translate3d(0px, 0px, -832.118px) rotateY(233.297deg) rotateX(-20.2062deg) scale(0.433037, 0.433037);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.59663s; transform-origin: 0px 0px 976.776px; transform: translate3d(0px, 0px, -976.776px) rotateY(62.8875deg) rotateX(-13.8329deg) scale(0.851413, 0.851413);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.49015s; transform-origin: 0px 0px 880.886px; transform: translate3d(0px, 0px, -880.886px) rotateY(320.73deg) rotateX(-39.9783deg) scale(1.1298, 1.1298);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.29978s; transform-origin: 0px 0px 946.233px; transform: translate3d(0px, 0px, -946.233px) rotateY(62.2746deg) rotateX(-4.35408deg) scale(0.734847, 0.734847);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.743539s; transform-origin: 0px 0px 835.322px; transform: translate3d(0px, 0px, -835.322px) rotateY(196.344deg) rotateX(-43.8647deg) scale(0.967989, 0.967989);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.00397s; transform-origin: 0px 0px 848.502px; transform: translate3d(0px, 0px, -848.502px) rotateY(72.7435deg) rotateX(-12.7154deg) scale(0.796069, 0.796069);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.283021s; transform-origin: 0px 0px 808.666px; transform: translate3d(0px, 0px, -808.666px) rotateY(110.425deg) rotateX(-0.987448deg) scale(0.824091, 0.824091);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.75244s; transform-origin: 0px 0px 1002.12px; transform: translate3d(0px, 0px, -1002.12px) rotateY(90.1378deg) rotateX(-37.0516deg) scale(0.412062, 0.412062);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.47831s; transform-origin: 0px 0px 828.926px; transform: translate3d(0px, 0px, -828.926px) rotateY(319.644deg) rotateX(-22.8604deg) scale(1.06718, 1.06718);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.533318s; transform-origin: 0px 0px 886.735px; transform: translate3d(0px, 0px, -886.735px) rotateY(39.5156deg) rotateX(-14.8417deg) scale(0.23128, 0.23128);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.14991s; transform-origin: 0px 0px 1089.02px; transform: translate3d(0px, 0px, -1089.02px) rotateY(276.046deg) rotateX(-42.7883deg) scale(0.739765, 0.739765);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.0837726s; transform-origin: 0px 0px 917.338px; transform: translate3d(0px, 0px, -917.338px) rotateY(32.7066deg) rotateX(-20.0164deg) scale(1.13322, 1.13322);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.33655s; transform-origin: 0px 0px 1059.99px; transform: translate3d(0px, 0px, -1059.99px) rotateY(255.222deg) rotateX(-14.7073deg) scale(0.312583, 0.312583);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.952604s; transform-origin: 0px 0px 814.496px; transform: translate3d(0px, 0px, -814.496px) rotateY(194.679deg) rotateX(-19.2691deg) scale(0.403551, 0.403551);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.72693s; transform-origin: 0px 0px 934.099px; transform: translate3d(0px, 0px, -934.099px) rotateY(307.888deg) rotateX(-3.47418deg) scale(0.388619, 0.388619);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.60867s; transform-origin: 0px 0px 929.624px; transform: translate3d(0px, 0px, -929.624px) rotateY(126.997deg) rotateX(-27.3652deg) scale(0.580468, 0.580468);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.46218s; transform-origin: 0px 0px 1000.71px; transform: translate3d(0px, 0px, -1000.71px) rotateY(206.232deg) rotateX(-15.0348deg) scale(0.574995, 0.574995);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.32154s; transform-origin: 0px 0px 858.853px; transform: translate3d(0px, 0px, -858.853px) rotateY(341.15deg) rotateX(-11.7583deg) scale(0.392724, 0.392724);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.25525s; transform-origin: 0px 0px 908.532px; transform: translate3d(0px, 0px, -908.532px) rotateY(178.842deg) rotateX(-17.5357deg) scale(1.06217, 1.06217);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.86411s; transform-origin: 0px 0px 815.886px; transform: translate3d(0px, 0px, -815.886px) rotateY(116.883deg) rotateX(-32.874deg) scale(1.06679, 1.06679);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.28295s; transform-origin: 0px 0px 974.55px; transform: translate3d(0px, 0px, -974.55px) rotateY(61.1489deg) rotateX(-46.8391deg) scale(0.21045, 0.21045);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.92274s; transform-origin: 0px 0px 932.742px; transform: translate3d(0px, 0px, -932.742px) rotateY(208.55deg) rotateX(-46.1495deg) scale(0.689025, 0.689025);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.90041s; transform-origin: 0px 0px 894.519px; transform: translate3d(0px, 0px, -894.519px) rotateY(109.973deg) rotateX(-13.6063deg) scale(0.229209, 0.229209);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.53503s; transform-origin: 0px 0px 1096.73px; transform: translate3d(0px, 0px, -1096.73px) rotateY(140.566deg) rotateX(-6.64047deg) scale(1.11742, 1.11742);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.74222s; transform-origin: 0px 0px 997.46px; transform: translate3d(0px, 0px, -997.46px) rotateY(342.147deg) rotateX(-10.3138deg) scale(0.875644, 0.875644);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.49326s; transform-origin: 0px 0px 889.563px; transform: translate3d(0px, 0px, -889.563px) rotateY(200.544deg) rotateX(-39.1676deg) scale(0.293999, 0.293999);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.93702s; transform-origin: 0px 0px 949.022px; transform: translate3d(0px, 0px, -949.022px) rotateY(166.154deg) rotateX(-47.9913deg) scale(0.980396, 0.980396);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.10092s; transform-origin: 0px 0px 885.122px; transform: translate3d(0px, 0px, -885.122px) rotateY(184.243deg) rotateX(-45.5495deg) scale(0.277543, 0.277543);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.14132s; transform-origin: 0px 0px 846.203px; transform: translate3d(0px, 0px, -846.203px) rotateY(204.967deg) rotateX(-42.5512deg) scale(1.08083, 1.08083);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.97515s; transform-origin: 0px 0px 1006.4px; transform: translate3d(0px, 0px, -1006.4px) rotateY(308.988deg) rotateX(-18.1778deg) scale(0.559143, 0.559143);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.78046s; transform-origin: 0px 0px 1019.32px; transform: translate3d(0px, 0px, -1019.32px) rotateY(7.78776deg) rotateX(-13.1859deg) scale(0.549677, 0.549677);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.40299s; transform-origin: 0px 0px 976.043px; transform: translate3d(0px, 0px, -976.043px) rotateY(239.431deg) rotateX(-40.3757deg) scale(1.06239, 1.06239);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.63752s; transform-origin: 0px 0px 899.804px; transform: translate3d(0px, 0px, -899.804px) rotateY(35.244deg) rotateX(-22.8067deg) scale(1.16293, 1.16293);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.76133s; transform-origin: 0px 0px 800.589px; transform: translate3d(0px, 0px, -800.589px) rotateY(74.428deg) rotateX(-40.4877deg) scale(1.04545, 1.04545);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.52219s; transform-origin: 0px 0px 996.603px; transform: translate3d(0px, 0px, -996.603px) rotateY(249.075deg) rotateX(-13.4819deg) scale(0.751587, 0.751587);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.12116s; transform-origin: 0px 0px 923.183px; transform: translate3d(0px, 0px, -923.183px) rotateY(305.272deg) rotateX(-40.8408deg) scale(0.668968, 0.668968);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.01758s; transform-origin: 0px 0px 900.35px; transform: translate3d(0px, 0px, -900.35px) rotateY(125.162deg) rotateX(-26.6064deg) scale(1.03433, 1.03433);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.88585s; transform-origin: 0px 0px 1034.11px; transform: translate3d(0px, 0px, -1034.11px) rotateY(220.964deg) rotateX(-34.3413deg) scale(0.47733, 0.47733);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.02571s; transform-origin: 0px 0px 1019.84px; transform: translate3d(0px, 0px, -1019.84px) rotateY(185.269deg) rotateX(-48.2984deg) scale(0.990619, 0.990619);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.249625s; transform-origin: 0px 0px 1063px; transform: translate3d(0px, 0px, -1063px) rotateY(163.846deg) rotateX(-27.4121deg) scale(0.634686, 0.634686);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.71214s; transform-origin: 0px 0px 1070.98px; transform: translate3d(0px, 0px, -1070.98px) rotateY(14.7109deg) rotateX(-35.677deg) scale(0.306173, 0.306173);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.504702s; transform-origin: 0px 0px 965.139px; transform: translate3d(0px, 0px, -965.139px) rotateY(168.171deg) rotateX(-20.3691deg) scale(0.332105, 0.332105);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.77465s; transform-origin: 0px 0px 1080.43px; transform: translate3d(0px, 0px, -1080.43px) rotateY(284.659deg) rotateX(-31.311deg) scale(1.18308, 1.18308);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.78125s; transform-origin: 0px 0px 962.032px; transform: translate3d(0px, 0px, -962.032px) rotateY(184.288deg) rotateX(-13.3955deg) scale(0.432736, 0.432736);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.29862s; transform-origin: 0px 0px 1080.36px; transform: translate3d(0px, 0px, -1080.36px) rotateY(234.828deg) rotateX(-14.0149deg) scale(0.510351, 0.510351);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.73572s; transform-origin: 0px 0px 994.23px; transform: translate3d(0px, 0px, -994.23px) rotateY(136.34deg) rotateX(-33.7596deg) scale(0.942019, 0.942019);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.51424s; transform-origin: 0px 0px 871.875px; transform: translate3d(0px, 0px, -871.875px) rotateY(63.4489deg) rotateX(-23.0695deg) scale(0.771582, 0.771582);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.61952s; transform-origin: 0px 0px 877.392px; transform: translate3d(0px, 0px, -877.392px) rotateY(224.831deg) rotateX(-13.0176deg) scale(0.432696, 0.432696);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.17505s; transform-origin: 0px 0px 971.855px; transform: translate3d(0px, 0px, -971.855px) rotateY(256.443deg) rotateX(-4.23722deg) scale(0.396793, 0.396793);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.29962s; transform-origin: 0px 0px 887.295px; transform: translate3d(0px, 0px, -887.295px) rotateY(8.63109deg) rotateX(-24.0379deg) scale(0.927582, 0.927582);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.69401s; transform-origin: 0px 0px 971.536px; transform: translate3d(0px, 0px, -971.536px) rotateY(57.1576deg) rotateX(-48.6545deg) scale(0.527919, 0.527919);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.05609s; transform-origin: 0px 0px 1001.78px; transform: translate3d(0px, 0px, -1001.78px) rotateY(115.225deg) rotateX(-3.53309deg) scale(1.0205, 1.0205);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.20321s; transform-origin: 0px 0px 1078.7px; transform: translate3d(0px, 0px, -1078.7px) rotateY(25.6854deg) rotateX(-43.9468deg) scale(1.195, 1.195);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.87761s; transform-origin: 0px 0px 969.858px; transform: translate3d(0px, 0px, -969.858px) rotateY(117.384deg) rotateX(-32.4202deg) scale(0.688464, 0.688464);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.9813s; transform-origin: 0px 0px 1003.66px; transform: translate3d(0px, 0px, -1003.66px) rotateY(296.596deg) rotateX(-14.162deg) scale(0.576627, 0.576627);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.842706s; transform-origin: 0px 0px 1059.59px; transform: translate3d(0px, 0px, -1059.59px) rotateY(73.3405deg) rotateX(-3.0971deg) scale(0.58678, 0.58678);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.20038s; transform-origin: 0px 0px 842.264px; transform: translate3d(0px, 0px, -842.264px) rotateY(137.561deg) rotateX(-12.686deg) scale(0.502832, 0.502832);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.39336s; transform-origin: 0px 0px 937.032px; transform: translate3d(0px, 0px, -937.032px) rotateY(46.3905deg) rotateX(-21.2148deg) scale(0.676341, 0.676341);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.309173s; transform-origin: 0px 0px 1039.93px; transform: translate3d(0px, 0px, -1039.93px) rotateY(104.464deg) rotateX(-8.01425deg) scale(1.06718, 1.06718);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.46545s; transform-origin: 0px 0px 1072.94px; transform: translate3d(0px, 0px, -1072.94px) rotateY(219.828deg) rotateX(-10.4515deg) scale(0.335409, 0.335409);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.64307s; transform-origin: 0px 0px 905.414px; transform: translate3d(0px, 0px, -905.414px) rotateY(221.295deg) rotateX(-26.6195deg) scale(0.783461, 0.783461);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.52873s; transform-origin: 0px 0px 947.886px; transform: translate3d(0px, 0px, -947.886px) rotateY(125.753deg) rotateX(-24.381deg) scale(1.1599, 1.1599);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.08321s; transform-origin: 0px 0px 1065.15px; transform: translate3d(0px, 0px, -1065.15px) rotateY(351.189deg) rotateX(-19.8586deg) scale(0.329077, 0.329077);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.63181s; transform-origin: 0px 0px 813.809px; transform: translate3d(0px, 0px, -813.809px) rotateY(345.661deg) rotateX(-27.5664deg) scale(0.337597, 0.337597);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.33174s; transform-origin: 0px 0px 1053.87px; transform: translate3d(0px, 0px, -1053.87px) rotateY(203.789deg) rotateX(-18.7561deg) scale(0.346195, 0.346195);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.22717s; transform-origin: 0px 0px 980.68px; transform: translate3d(0px, 0px, -980.68px) rotateY(112.138deg) rotateX(-12.0294deg) scale(1.18118, 1.18118);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.39169s; transform-origin: 0px 0px 889.456px; transform: translate3d(0px, 0px, -889.456px) rotateY(39.9019deg) rotateX(-47.1674deg) scale(0.72549, 0.72549);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.74978s; transform-origin: 0px 0px 856.32px; transform: translate3d(0px, 0px, -856.32px) rotateY(128.188deg) rotateX(-16.9589deg) scale(0.955157, 0.955157);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.81714s; transform-origin: 0px 0px 897.491px; transform: translate3d(0px, 0px, -897.491px) rotateY(16.1046deg) rotateX(-44.4371deg) scale(1.0948, 1.0948);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.21823s; transform-origin: 0px 0px 875.21px; transform: translate3d(0px, 0px, -875.21px) rotateY(138.407deg) rotateX(-16.0992deg) scale(1.01392, 1.01392);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.56802s; transform-origin: 0px 0px 837.9px; transform: translate3d(0px, 0px, -837.9px) rotateY(320.519deg) rotateX(-40.0808deg) scale(1.08382, 1.08382);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.21207s; transform-origin: 0px 0px 1039.53px; transform: translate3d(0px, 0px, -1039.53px) rotateY(258.849deg) rotateX(-16.9982deg) scale(0.200275, 0.200275);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.972922s; transform-origin: 0px 0px 1052.88px; transform: translate3d(0px, 0px, -1052.88px) rotateY(39.162deg) rotateX(-27.5365deg) scale(0.486896, 0.486896);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.21772s; transform-origin: 0px 0px 850.877px; transform: translate3d(0px, 0px, -850.877px) rotateY(202.369deg) rotateX(-27.8172deg) scale(0.402224, 0.402224);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.78034s; transform-origin: 0px 0px 927.558px; transform: translate3d(0px, 0px, -927.558px) rotateY(277.359deg) rotateX(-45.056deg) scale(0.890617, 0.890617);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.94087s; transform-origin: 0px 0px 850.898px; transform: translate3d(0px, 0px, -850.898px) rotateY(230.416deg) rotateX(-11.1906deg) scale(0.464817, 0.464817);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.504364s; transform-origin: 0px 0px 891.378px; transform: translate3d(0px, 0px, -891.378px) rotateY(343.181deg) rotateX(-22.5277deg) scale(0.314726, 0.314726);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.88831s; transform-origin: 0px 0px 1061.3px; transform: translate3d(0px, 0px, -1061.3px) rotateY(39.1815deg) rotateX(-34.4301deg) scale(0.562238, 0.562238);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.44401s; transform-origin: 0px 0px 907.887px; transform: translate3d(0px, 0px, -907.887px) rotateY(215.662deg) rotateX(-8.75287deg) scale(1.02438, 1.02438);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.88925s; transform-origin: 0px 0px 846.283px; transform: translate3d(0px, 0px, -846.283px) rotateY(248.481deg) rotateX(-48.7035deg) scale(1.06537, 1.06537);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.77347s; transform-origin: 0px 0px 998.707px; transform: translate3d(0px, 0px, -998.707px) rotateY(59.6781deg) rotateX(-14.3751deg) scale(0.518408, 0.518408);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.03133s; transform-origin: 0px 0px 1055.7px; transform: translate3d(0px, 0px, -1055.7px) rotateY(287.081deg) rotateX(-45.0132deg) scale(0.982551, 0.982551);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.783263s; transform-origin: 0px 0px 856.928px; transform: translate3d(0px, 0px, -856.928px) rotateY(60.2685deg) rotateX(-40.0371deg) scale(0.452594, 0.452594);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.20356s; transform-origin: 0px 0px 836.105px; transform: translate3d(0px, 0px, -836.105px) rotateY(32.5837deg) rotateX(-6.93237deg) scale(0.263788, 0.263788);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.0288293s; transform-origin: 0px 0px 865.578px; transform: translate3d(0px, 0px, -865.578px) rotateY(259.89deg) rotateX(-28.1032deg) scale(0.743059, 0.743059);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.84745s; transform-origin: 0px 0px 967.658px; transform: translate3d(0px, 0px, -967.658px) rotateY(84.3237deg) rotateX(-1.15083deg) scale(0.542118, 0.542118);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.37833s; transform-origin: 0px 0px 1089.99px; transform: translate3d(0px, 0px, -1089.99px) rotateY(97.205deg) rotateX(-46.3695deg) scale(1.01342, 1.01342);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.48621s; transform-origin: 0px 0px 1050.94px; transform: translate3d(0px, 0px, -1050.94px) rotateY(195.902deg) rotateX(-3.11059deg) scale(0.798711, 0.798711);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.58727s; transform-origin: 0px 0px 1037.9px; transform: translate3d(0px, 0px, -1037.9px) rotateY(287.688deg) rotateX(-3.656deg) scale(0.25224, 0.25224);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.29731s; transform-origin: 0px 0px 1016.44px; transform: translate3d(0px, 0px, -1016.44px) rotateY(313.323deg) rotateX(-31.2664deg) scale(0.358265, 0.358265);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.50904s; transform-origin: 0px 0px 871.521px; transform: translate3d(0px, 0px, -871.521px) rotateY(353.832deg) rotateX(-9.00091deg) scale(0.629428, 0.629428);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.93894s; transform-origin: 0px 0px 856.094px; transform: translate3d(0px, 0px, -856.094px) rotateY(192.084deg) rotateX(-28.422deg) scale(0.295555, 0.295555);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.26366s; transform-origin: 0px 0px 992.309px; transform: translate3d(0px, 0px, -992.309px) rotateY(236.944deg) rotateX(-48.0769deg) scale(0.932894, 0.932894);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.97309s; transform-origin: 0px 0px 1082.1px; transform: translate3d(0px, 0px, -1082.1px) rotateY(217.815deg) rotateX(-6.02028deg) scale(0.888724, 0.888724);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.083s; transform-origin: 0px 0px 1040.75px; transform: translate3d(0px, 0px, -1040.75px) rotateY(174.332deg) rotateX(-3.16886deg) scale(0.277095, 0.277095);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.11302s; transform-origin: 0px 0px 962.945px; transform: translate3d(0px, 0px, -962.945px) rotateY(71.932deg) rotateX(-34.4529deg) scale(0.764406, 0.764406);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.199054s; transform-origin: 0px 0px 931.781px; transform: translate3d(0px, 0px, -931.781px) rotateY(107.338deg) rotateX(-35.0459deg) scale(0.39175, 0.39175);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.43966s; transform-origin: 0px 0px 813.483px; transform: translate3d(0px, 0px, -813.483px) rotateY(139.249deg) rotateX(-9.86847deg) scale(1.17952, 1.17952);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.15767s; transform-origin: 0px 0px 966.614px; transform: translate3d(0px, 0px, -966.614px) rotateY(224.511deg) rotateX(-24.3862deg) scale(0.362283, 0.362283);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.41463s; transform-origin: 0px 0px 887.456px; transform: translate3d(0px, 0px, -887.456px) rotateY(204.033deg) rotateX(-24.3801deg) scale(0.585119, 0.585119);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.69627s; transform-origin: 0px 0px 816.28px; transform: translate3d(0px, 0px, -816.28px) rotateY(215.458deg) rotateX(-2.25448deg) scale(1.15978, 1.15978);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.3728s; transform-origin: 0px 0px 958.253px; transform: translate3d(0px, 0px, -958.253px) rotateY(213.202deg) rotateX(-43.9437deg) scale(0.210313, 0.210313);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.56615s; transform-origin: 0px 0px 934.185px; transform: translate3d(0px, 0px, -934.185px) rotateY(280.831deg) rotateX(-11.4949deg) scale(0.602202, 0.602202);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.3696s; transform-origin: 0px 0px 1087.99px; transform: translate3d(0px, 0px, -1087.99px) rotateY(43.7114deg) rotateX(-44.6822deg) scale(0.88774, 0.88774);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.503324s; transform-origin: 0px 0px 1031.6px; transform: translate3d(0px, 0px, -1031.6px) rotateY(121.57deg) rotateX(-31.9123deg) scale(0.479079, 0.479079);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.70615s; transform-origin: 0px 0px 958.239px; transform: translate3d(0px, 0px, -958.239px) rotateY(281.242deg) rotateX(-42.0644deg) scale(0.708454, 0.708454);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.854941s; transform-origin: 0px 0px 1001.52px; transform: translate3d(0px, 0px, -1001.52px) rotateY(139.216deg) rotateX(-46.6421deg) scale(1.09316, 1.09316);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.93793s; transform-origin: 0px 0px 870.494px; transform: translate3d(0px, 0px, -870.494px) rotateY(329.312deg) rotateX(-14.6853deg) scale(0.991856, 0.991856);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.89634s; transform-origin: 0px 0px 889.956px; transform: translate3d(0px, 0px, -889.956px) rotateY(253.523deg) rotateX(-7.2804deg) scale(0.369166, 0.369166);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.46183s; transform-origin: 0px 0px 897.307px; transform: translate3d(0px, 0px, -897.307px) rotateY(160.775deg) rotateX(-30.2636deg) scale(1.11218, 1.11218);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.58721s; transform-origin: 0px 0px 982.257px; transform: translate3d(0px, 0px, -982.257px) rotateY(125.738deg) rotateX(-6.52595deg) scale(0.368692, 0.368692);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.65136s; transform-origin: 0px 0px 1026.42px; transform: translate3d(0px, 0px, -1026.42px) rotateY(139.645deg) rotateX(-2.97541deg) scale(0.789378, 0.789378);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.72195s; transform-origin: 0px 0px 1069.41px; transform: translate3d(0px, 0px, -1069.41px) rotateY(255.528deg) rotateX(-20.463deg) scale(0.773867, 0.773867);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.16855s; transform-origin: 0px 0px 831.888px; transform: translate3d(0px, 0px, -831.888px) rotateY(159.147deg) rotateX(-34.2453deg) scale(0.932556, 0.932556);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.908648s; transform-origin: 0px 0px 809.949px; transform: translate3d(0px, 0px, -809.949px) rotateY(141.641deg) rotateX(-4.18841deg) scale(0.745854, 0.745854);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.63565s; transform-origin: 0px 0px 1003.87px; transform: translate3d(0px, 0px, -1003.87px) rotateY(175.502deg) rotateX(-4.62462deg) scale(0.562164, 0.562164);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.81871s; transform-origin: 0px 0px 1046.26px; transform: translate3d(0px, 0px, -1046.26px) rotateY(52.3616deg) rotateX(-15.8559deg) scale(1.06687, 1.06687);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.88975s; transform-origin: 0px 0px 871.149px; transform: translate3d(0px, 0px, -871.149px) rotateY(26.5143deg) rotateX(-9.5487deg) scale(0.549136, 0.549136);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.77806s; transform-origin: 0px 0px 840.27px; transform: translate3d(0px, 0px, -840.27px) rotateY(33.1888deg) rotateX(-47.8039deg) scale(0.659615, 0.659615);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.42037s; transform-origin: 0px 0px 1093.3px; transform: translate3d(0px, 0px, -1093.3px) rotateY(86.0537deg) rotateX(-31.5416deg) scale(0.81477, 0.81477);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.63626s; transform-origin: 0px 0px 916.238px; transform: translate3d(0px, 0px, -916.238px) rotateY(182.179deg) rotateX(-43.0869deg) scale(0.997951, 0.997951);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.86372s; transform-origin: 0px 0px 1077.7px; transform: translate3d(0px, 0px, -1077.7px) rotateY(56.05deg) rotateX(-45.1918deg) scale(0.604104, 0.604104);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.907453s; transform-origin: 0px 0px 952.319px; transform: translate3d(0px, 0px, -952.319px) rotateY(257.3deg) rotateX(-4.16753deg) scale(0.20665, 0.20665);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.0851s; transform-origin: 0px 0px 801.314px; transform: translate3d(0px, 0px, -801.314px) rotateY(246.656deg) rotateX(-11.9137deg) scale(1.12662, 1.12662);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.46053s; transform-origin: 0px 0px 861.952px; transform: translate3d(0px, 0px, -861.952px) rotateY(359.985deg) rotateX(-21.3241deg) scale(1.15535, 1.15535);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.3375s; transform-origin: 0px 0px 1012.1px; transform: translate3d(0px, 0px, -1012.1px) rotateY(275.815deg) rotateX(-7.99554deg) scale(0.711729, 0.711729);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.81489s; transform-origin: 0px 0px 1084.57px; transform: translate3d(0px, 0px, -1084.57px) rotateY(137.371deg) rotateX(-26.7485deg) scale(0.317661, 0.317661);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.23051s; transform-origin: 0px 0px 899.208px; transform: translate3d(0px, 0px, -899.208px) rotateY(63.8641deg) rotateX(-34.1524deg) scale(0.406805, 0.406805);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.959889s; transform-origin: 0px 0px 911.694px; transform: translate3d(0px, 0px, -911.694px) rotateY(98.2748deg) rotateX(-36.2237deg) scale(0.894286, 0.894286);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.66043s; transform-origin: 0px 0px 831.032px; transform: translate3d(0px, 0px, -831.032px) rotateY(54.3369deg) rotateX(-45.6893deg) scale(1.09491, 1.09491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.22613s; transform-origin: 0px 0px 821.434px; transform: translate3d(0px, 0px, -821.434px) rotateY(163.525deg) rotateX(-39.7904deg) scale(0.611058, 0.611058);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.5294s; transform-origin: 0px 0px 1030.52px; transform: translate3d(0px, 0px, -1030.52px) rotateY(280.548deg) rotateX(-40.3824deg) scale(0.378632, 0.378632);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.0461s; transform-origin: 0px 0px 1008.17px; transform: translate3d(0px, 0px, -1008.17px) rotateY(14.5701deg) rotateX(-25.9536deg) scale(0.806383, 0.806383);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.64739s; transform-origin: 0px 0px 930.988px; transform: translate3d(0px, 0px, -930.988px) rotateY(115.997deg) rotateX(-15.6951deg) scale(0.629987, 0.629987);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.6855s; transform-origin: 0px 0px 895.674px; transform: translate3d(0px, 0px, -895.674px) rotateY(152.038deg) rotateX(-19.1398deg) scale(0.261599, 0.261599);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.01155s; transform-origin: 0px 0px 876.018px; transform: translate3d(0px, 0px, -876.018px) rotateY(141.281deg) rotateX(-15.6792deg) scale(0.375191, 0.375191);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.62366s; transform-origin: 0px 0px 891.299px; transform: translate3d(0px, 0px, -891.299px) rotateY(326.638deg) rotateX(-42.8867deg) scale(0.282104, 0.282104);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.1005s; transform-origin: 0px 0px 1021.97px; transform: translate3d(0px, 0px, -1021.97px) rotateY(176.723deg) rotateX(-29.8922deg) scale(0.269229, 0.269229);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.09844s; transform-origin: 0px 0px 940.882px; transform: translate3d(0px, 0px, -940.882px) rotateY(252.866deg) rotateX(-40.4584deg) scale(0.852424, 0.852424);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.48909s; transform-origin: 0px 0px 1000.53px; transform: translate3d(0px, 0px, -1000.53px) rotateY(160.448deg) rotateX(-13.5965deg) scale(0.317575, 0.317575);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.39516s; transform-origin: 0px 0px 848.526px; transform: translate3d(0px, 0px, -848.526px) rotateY(312.456deg) rotateX(-25.4058deg) scale(0.522353, 0.522353);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.51972s; transform-origin: 0px 0px 1042.24px; transform: translate3d(0px, 0px, -1042.24px) rotateY(299.33deg) rotateX(-23.6835deg) scale(1.06898, 1.06898);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.36604s; transform-origin: 0px 0px 887.775px; transform: translate3d(0px, 0px, -887.775px) rotateY(52.2246deg) rotateX(-34.0478deg) scale(0.586767, 0.586767);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.2161s; transform-origin: 0px 0px 903.37px; transform: translate3d(0px, 0px, -903.37px) rotateY(182.759deg) rotateX(-13.6383deg) scale(0.884497, 0.884497);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.405484s; transform-origin: 0px 0px 915.765px; transform: translate3d(0px, 0px, -915.765px) rotateY(192.32deg) rotateX(-28.4672deg) scale(0.612582, 0.612582);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.49614s; transform-origin: 0px 0px 1058.11px; transform: translate3d(0px, 0px, -1058.11px) rotateY(181.839deg) rotateX(-37.9615deg) scale(0.682902, 0.682902);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.90964s; transform-origin: 0px 0px 803.237px; transform: translate3d(0px, 0px, -803.237px) rotateY(199.029deg) rotateX(-27.0513deg) scale(0.909045, 0.909045);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.7235s; transform-origin: 0px 0px 1070.81px; transform: translate3d(0px, 0px, -1070.81px) rotateY(337.09deg) rotateX(-0.134195deg) scale(1.15293, 1.15293);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.17963s; transform-origin: 0px 0px 891.475px; transform: translate3d(0px, 0px, -891.475px) rotateY(25.675deg) rotateX(-6.3805deg) scale(0.499931, 0.499931);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.5204s; transform-origin: 0px 0px 1014.28px; transform: translate3d(0px, 0px, -1014.28px) rotateY(205.735deg) rotateX(-7.68526deg) scale(0.753577, 0.753577);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.58409s; transform-origin: 0px 0px 1044.05px; transform: translate3d(0px, 0px, -1044.05px) rotateY(35.0961deg) rotateX(-28.8056deg) scale(0.809264, 0.809264);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.04364s; transform-origin: 0px 0px 1006.13px; transform: translate3d(0px, 0px, -1006.13px) rotateY(91.4908deg) rotateX(-48.4403deg) scale(0.738447, 0.738447);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.91061s; transform-origin: 0px 0px 992.823px; transform: translate3d(0px, 0px, -992.823px) rotateY(104.021deg) rotateX(-34.6546deg) scale(0.25383, 0.25383);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.94358s; transform-origin: 0px 0px 960.518px; transform: translate3d(0px, 0px, -960.518px) rotateY(70.7516deg) rotateX(-25.4174deg) scale(0.872335, 0.872335);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.34242s; transform-origin: 0px 0px 895.385px; transform: translate3d(0px, 0px, -895.385px) rotateY(112.165deg) rotateX(-5.00556deg) scale(0.839779, 0.839779);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.29975s; transform-origin: 0px 0px 898.259px; transform: translate3d(0px, 0px, -898.259px) rotateY(146.742deg) rotateX(-0.682078deg) scale(0.569515, 0.569515);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.98284s; transform-origin: 0px 0px 931.348px; transform: translate3d(0px, 0px, -931.348px) rotateY(205.824deg) rotateX(-37.6193deg) scale(1.02253, 1.02253);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.61913s; transform-origin: 0px 0px 859.525px; transform: translate3d(0px, 0px, -859.525px) rotateY(277.922deg) rotateX(-36.8316deg) scale(0.518784, 0.518784);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.96417s; transform-origin: 0px 0px 1064.19px; transform: translate3d(0px, 0px, -1064.19px) rotateY(276.844deg) rotateX(-11.0729deg) scale(0.349304, 0.349304);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.83463s; transform-origin: 0px 0px 984.37px; transform: translate3d(0px, 0px, -984.37px) rotateY(64.0959deg) rotateX(-28.7838deg) scale(0.229803, 0.229803);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.27456s; transform-origin: 0px 0px 1057.26px; transform: translate3d(0px, 0px, -1057.26px) rotateY(351.187deg) rotateX(-35.7463deg) scale(0.979797, 0.979797);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.54997s; transform-origin: 0px 0px 978.065px; transform: translate3d(0px, 0px, -978.065px) rotateY(350.494deg) rotateX(-7.2115deg) scale(0.419476, 0.419476);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.67115s; transform-origin: 0px 0px 898.516px; transform: translate3d(0px, 0px, -898.516px) rotateY(184.628deg) rotateX(-47.3507deg) scale(1.12783, 1.12783);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.51338s; transform-origin: 0px 0px 939.171px; transform: translate3d(0px, 0px, -939.171px) rotateY(275.327deg) rotateX(-11.3456deg) scale(0.765046, 0.765046);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.01128s; transform-origin: 0px 0px 1088.18px; transform: translate3d(0px, 0px, -1088.18px) rotateY(95.6747deg) rotateX(-37.6133deg) scale(0.804606, 0.804606);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.24707s; transform-origin: 0px 0px 802.919px; transform: translate3d(0px, 0px, -802.919px) rotateY(218.741deg) rotateX(-45.4337deg) scale(0.290308, 0.290308);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.57322s; transform-origin: 0px 0px 933.477px; transform: translate3d(0px, 0px, -933.477px) rotateY(231.233deg) rotateX(-33.4545deg) scale(0.729491, 0.729491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.74577s; transform-origin: 0px 0px 999.806px; transform: translate3d(0px, 0px, -999.806px) rotateY(190.292deg) rotateX(-13.4232deg) scale(1.11491, 1.11491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.82093s; transform-origin: 0px 0px 805.818px; transform: translate3d(0px, 0px, -805.818px) rotateY(291.086deg) rotateX(-6.97287deg) scale(0.461406, 0.461406);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.54715s; transform-origin: 0px 0px 850.679px; transform: translate3d(0px, 0px, -850.679px) rotateY(261.393deg) rotateX(-28.121deg) scale(0.736578, 0.736578);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.11167s; transform-origin: 0px 0px 844.303px; transform: translate3d(0px, 0px, -844.303px) rotateY(343.71deg) rotateX(-1.35438deg) scale(0.557655, 0.557655);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.9912s; transform-origin: 0px 0px 1034.93px; transform: translate3d(0px, 0px, -1034.93px) rotateY(250.989deg) rotateX(-39.5915deg) scale(0.745497, 0.745497);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.66096s; transform-origin: 0px 0px 1094.53px; transform: translate3d(0px, 0px, -1094.53px) rotateY(149.253deg) rotateX(-42.0825deg) scale(0.620792, 0.620792);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.81786s; transform-origin: 0px 0px 915.523px; transform: translate3d(0px, 0px, -915.523px) rotateY(192.86deg) rotateX(-7.48732deg) scale(0.263973, 0.263973);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.163622s; transform-origin: 0px 0px 901.814px; transform: translate3d(0px, 0px, -901.814px) rotateY(13.2088deg) rotateX(-23.2027deg) scale(0.926929, 0.926929);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.99182s; transform-origin: 0px 0px 932.911px; transform: translate3d(0px, 0px, -932.911px) rotateY(241.616deg) rotateX(-29.8945deg) scale(0.536599, 0.536599);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.80864s; transform-origin: 0px 0px 860.803px; transform: translate3d(0px, 0px, -860.803px) rotateY(338.613deg) rotateX(-13.2334deg) scale(0.255375, 0.255375);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.455598s; transform-origin: 0px 0px 1016.53px; transform: translate3d(0px, 0px, -1016.53px) rotateY(58.0154deg) rotateX(-44.4032deg) scale(0.491777, 0.491777);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.06857s; transform-origin: 0px 0px 960.55px; transform: translate3d(0px, 0px, -960.55px) rotateY(220.75deg) rotateX(-3.15556deg) scale(1.11603, 1.11603);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.96103s; transform-origin: 0px 0px 1014.15px; transform: translate3d(0px, 0px, -1014.15px) rotateY(350.423deg) rotateX(-38.4498deg) scale(0.621882, 0.621882);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.57699s; transform-origin: 0px 0px 957.959px; transform: translate3d(0px, 0px, -957.959px) rotateY(91.7798deg) rotateX(-2.73723deg) scale(1.10805, 1.10805);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.289s; transform-origin: 0px 0px 1031.54px; transform: translate3d(0px, 0px, -1031.54px) rotateY(89.3453deg) rotateX(-25.3738deg) scale(0.318133, 0.318133);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.64836s; transform-origin: 0px 0px 956.768px; transform: translate3d(0px, 0px, -956.768px) rotateY(66.6311deg) rotateX(-29.1628deg) scale(0.885804, 0.885804);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.04584s; transform-origin: 0px 0px 1066.87px; transform: translate3d(0px, 0px, -1066.87px) rotateY(6.70909deg) rotateX(-10.1967deg) scale(0.612635, 0.612635);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.387322s; transform-origin: 0px 0px 1066.73px; transform: translate3d(0px, 0px, -1066.73px) rotateY(44.3109deg) rotateX(-5.74725deg) scale(0.318768, 0.318768);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.17244s; transform-origin: 0px 0px 1097.7px; transform: translate3d(0px, 0px, -1097.7px) rotateY(25.7729deg) rotateX(-14.6423deg) scale(0.878048, 0.878048);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.06795s; transform-origin: 0px 0px 922.275px; transform: translate3d(0px, 0px, -922.275px) rotateY(77.7271deg) rotateX(-34.7072deg) scale(0.599783, 0.599783);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.4638s; transform-origin: 0px 0px 929.392px; transform: translate3d(0px, 0px, -929.392px) rotateY(11.1367deg) rotateX(-15.5727deg) scale(0.435436, 0.435436);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.94344s; transform-origin: 0px 0px 1059.16px; transform: translate3d(0px, 0px, -1059.16px) rotateY(160.622deg) rotateX(-6.66854deg) scale(0.712848, 0.712848);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.851933s; transform-origin: 0px 0px 954.747px; transform: translate3d(0px, 0px, -954.747px) rotateY(47.0267deg) rotateX(-13.2212deg) scale(0.757281, 0.757281);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.3882s; transform-origin: 0px 0px 1085px; transform: translate3d(0px, 0px, -1085px) rotateY(256.06deg) rotateX(-29.6562deg) scale(0.698947, 0.698947);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.25539s; transform-origin: 0px 0px 889.843px; transform: translate3d(0px, 0px, -889.843px) rotateY(139.133deg) rotateX(-49.4222deg) scale(0.637972, 0.637972);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.28683s; transform-origin: 0px 0px 989.638px; transform: translate3d(0px, 0px, -989.638px) rotateY(171.244deg) rotateX(-44.8402deg) scale(0.528587, 0.528587);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.7921s; transform-origin: 0px 0px 807.036px; transform: translate3d(0px, 0px, -807.036px) rotateY(247.077deg) rotateX(-8.64901deg) scale(0.993007, 0.993007);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.59306s; transform-origin: 0px 0px 802.652px; transform: translate3d(0px, 0px, -802.652px) rotateY(34.5334deg) rotateX(-21.0302deg) scale(0.70327, 0.70327);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.41037s; transform-origin: 0px 0px 899.942px; transform: translate3d(0px, 0px, -899.942px) rotateY(323.367deg) rotateX(-38.9852deg) scale(1.19388, 1.19388);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.13615s; transform-origin: 0px 0px 932.722px; transform: translate3d(0px, 0px, -932.722px) rotateY(110.651deg) rotateX(-34.5731deg) scale(0.723622, 0.723622);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.69501s; transform-origin: 0px 0px 927.685px; transform: translate3d(0px, 0px, -927.685px) rotateY(48.3667deg) rotateX(-35.4989deg) scale(0.942705, 0.942705);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.68164s; transform-origin: 0px 0px 831.456px; transform: translate3d(0px, 0px, -831.456px) rotateY(218.107deg) rotateX(-46.6613deg) scale(0.394489, 0.394489);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.65941s; transform-origin: 0px 0px 823.618px; transform: translate3d(0px, 0px, -823.618px) rotateY(328.756deg) rotateX(-5.10077deg) scale(0.332279, 0.332279);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.92525s; transform-origin: 0px 0px 930.886px; transform: translate3d(0px, 0px, -930.886px) rotateY(28.1815deg) rotateX(-45.1475deg) scale(0.872547, 0.872547);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.85018s; transform-origin: 0px 0px 826.427px; transform: translate3d(0px, 0px, -826.427px) rotateY(157.941deg) rotateX(-19.4484deg) scale(1.15022, 1.15022);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.71015s; transform-origin: 0px 0px 863.318px; transform: translate3d(0px, 0px, -863.318px) rotateY(297.989deg) rotateX(-36.8778deg) scale(0.263969, 0.263969);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.16915s; transform-origin: 0px 0px 820.054px; transform: translate3d(0px, 0px, -820.054px) rotateY(333.099deg) rotateX(-46.7456deg) scale(0.725681, 0.725681);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.48489s; transform-origin: 0px 0px 916.416px; transform: translate3d(0px, 0px, -916.416px) rotateY(45.3163deg) rotateX(-41.1493deg) scale(0.395918, 0.395918);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.40484s; transform-origin: 0px 0px 947.55px; transform: translate3d(0px, 0px, -947.55px) rotateY(286.906deg) rotateX(-36.6907deg) scale(0.387234, 0.387234);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.61912s; transform-origin: 0px 0px 1043.19px; transform: translate3d(0px, 0px, -1043.19px) rotateY(222.789deg) rotateX(-9.28354deg) scale(0.608615, 0.608615);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.8513s; transform-origin: 0px 0px 827.966px; transform: translate3d(0px, 0px, -827.966px) rotateY(354.99deg) rotateX(-5.63528deg) scale(0.575165, 0.575165);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.57921s; transform-origin: 0px 0px 964.954px; transform: translate3d(0px, 0px, -964.954px) rotateY(0.961047deg) rotateX(-49.3928deg) scale(0.943357, 0.943357);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.39086s; transform-origin: 0px 0px 1051.62px; transform: translate3d(0px, 0px, -1051.62px) rotateY(277.568deg) rotateX(-15.5122deg) scale(1.06892, 1.06892);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.17306s; transform-origin: 0px 0px 858.675px; transform: translate3d(0px, 0px, -858.675px) rotateY(242.894deg) rotateX(-27.2651deg) scale(0.275899, 0.275899);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.90425s; transform-origin: 0px 0px 879.471px; transform: translate3d(0px, 0px, -879.471px) rotateY(353.023deg) rotateX(-14.9718deg) scale(0.210973, 0.210973);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.76751s; transform-origin: 0px 0px 1032.41px; transform: translate3d(0px, 0px, -1032.41px) rotateY(314.229deg) rotateX(-32.837deg) scale(0.378164, 0.378164);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.44225s; transform-origin: 0px 0px 813.376px; transform: translate3d(0px, 0px, -813.376px) rotateY(134.608deg) rotateX(-0.28505deg) scale(0.865228, 0.865228);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.89398s; transform-origin: 0px 0px 915.456px; transform: translate3d(0px, 0px, -915.456px) rotateY(68.7748deg) rotateX(-6.81011deg) scale(1.07925, 1.07925);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.448467s; transform-origin: 0px 0px 914.737px; transform: translate3d(0px, 0px, -914.737px) rotateY(200.744deg) rotateX(-4.73566deg) scale(0.580699, 0.580699);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.38794s; transform-origin: 0px 0px 865.671px; transform: translate3d(0px, 0px, -865.671px) rotateY(137.665deg) rotateX(-45.8643deg) scale(0.581297, 0.581297);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.81777s; transform-origin: 0px 0px 956.274px; transform: translate3d(0px, 0px, -956.274px) rotateY(200.453deg) rotateX(-13.3927deg) scale(0.961714, 0.961714);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.28613s; transform-origin: 0px 0px 957.681px; transform: translate3d(0px, 0px, -957.681px) rotateY(119.182deg) rotateX(-43.8321deg) scale(1.05306, 1.05306);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.00367s; transform-origin: 0px 0px 1004.78px; transform: translate3d(0px, 0px, -1004.78px) rotateY(239.668deg) rotateX(-41.3827deg) scale(0.8641, 0.8641);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.36361s; transform-origin: 0px 0px 929.188px; transform: translate3d(0px, 0px, -929.188px) rotateY(219.882deg) rotateX(-0.106679deg) scale(0.838746, 0.838746);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.14136s; transform-origin: 0px 0px 1091.16px; transform: translate3d(0px, 0px, -1091.16px) rotateY(212.317deg) rotateX(-49.6405deg) scale(0.241515, 0.241515);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.288738s; transform-origin: 0px 0px 907.242px; transform: translate3d(0px, 0px, -907.242px) rotateY(284.528deg) rotateX(-9.86006deg) scale(0.883269, 0.883269);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.0858915s; transform-origin: 0px 0px 817.036px; transform: translate3d(0px, 0px, -817.036px) rotateY(18.0602deg) rotateX(-27.8508deg) scale(0.218569, 0.218569);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.08459s; transform-origin: 0px 0px 823.729px; transform: translate3d(0px, 0px, -823.729px) rotateY(183.049deg) rotateX(-0.239002deg) scale(0.934441, 0.934441);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.51916s; transform-origin: 0px 0px 1066.99px; transform: translate3d(0px, 0px, -1066.99px) rotateY(80.7153deg) rotateX(-29.1837deg) scale(0.654874, 0.654874);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.86771s; transform-origin: 0px 0px 1006.7px; transform: translate3d(0px, 0px, -1006.7px) rotateY(254.303deg) rotateX(-6.83848deg) scale(0.633223, 0.633223);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.70609s; transform-origin: 0px 0px 1072.63px; transform: translate3d(0px, 0px, -1072.63px) rotateY(308.111deg) rotateX(-16.8061deg) scale(0.455827, 0.455827);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.19066s; transform-origin: 0px 0px 978.104px; transform: translate3d(0px, 0px, -978.104px) rotateY(218.673deg) rotateX(-45.1573deg) scale(0.789114, 0.789114);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.867697s; transform-origin: 0px 0px 966.423px; transform: translate3d(0px, 0px, -966.423px) rotateY(311.162deg) rotateX(-49.4208deg) scale(0.564454, 0.564454);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.28786s; transform-origin: 0px 0px 996.88px; transform: translate3d(0px, 0px, -996.88px) rotateY(214.984deg) rotateX(-39.2227deg) scale(0.326141, 0.326141);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.31623s; transform-origin: 0px 0px 1033.34px; transform: translate3d(0px, 0px, -1033.34px) rotateY(115.769deg) rotateX(-17.8779deg) scale(0.747601, 0.747601);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.84175s; transform-origin: 0px 0px 917.618px; transform: translate3d(0px, 0px, -917.618px) rotateY(124.451deg) rotateX(-29.0162deg) scale(0.979859, 0.979859);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.92994s; transform-origin: 0px 0px 891.154px; transform: translate3d(0px, 0px, -891.154px) rotateY(338.468deg) rotateX(-32.4242deg) scale(1.05647, 1.05647);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.41676s; transform-origin: 0px 0px 1036.19px; transform: translate3d(0px, 0px, -1036.19px) rotateY(150.794deg) rotateX(-38.8114deg) scale(0.747138, 0.747138);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.44661s; transform-origin: 0px 0px 908.253px; transform: translate3d(0px, 0px, -908.253px) rotateY(244.815deg) rotateX(-42.4233deg) scale(1.11308, 1.11308);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.14511s; transform-origin: 0px 0px 850.839px; transform: translate3d(0px, 0px, -850.839px) rotateY(319.773deg) rotateX(-49.0974deg) scale(0.38367, 0.38367);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.14257s; transform-origin: 0px 0px 1089.14px; transform: translate3d(0px, 0px, -1089.14px) rotateY(163.951deg) rotateX(-36.2586deg) scale(0.93462, 0.93462);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.98585s; transform-origin: 0px 0px 882.626px; transform: translate3d(0px, 0px, -882.626px) rotateY(41.1489deg) rotateX(-9.19165deg) scale(0.689478, 0.689478);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.86507s; transform-origin: 0px 0px 979.183px; transform: translate3d(0px, 0px, -979.183px) rotateY(85.8116deg) rotateX(-25.7664deg) scale(0.575618, 0.575618);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.55597s; transform-origin: 0px 0px 808.272px; transform: translate3d(0px, 0px, -808.272px) rotateY(313.373deg) rotateX(-2.41193deg) scale(0.970941, 0.970941);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.86605s; transform-origin: 0px 0px 918.05px; transform: translate3d(0px, 0px, -918.05px) rotateY(320.741deg) rotateX(-13.7396deg) scale(1.14943, 1.14943);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.7708s; transform-origin: 0px 0px 904.041px; transform: translate3d(0px, 0px, -904.041px) rotateY(225.946deg) rotateX(-45.7194deg) scale(0.874203, 0.874203);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.90261s; transform-origin: 0px 0px 1020.63px; transform: translate3d(0px, 0px, -1020.63px) rotateY(30.2695deg) rotateX(-0.6977deg) scale(0.362169, 0.362169);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.36634s; transform-origin: 0px 0px 1068.76px; transform: translate3d(0px, 0px, -1068.76px) rotateY(286.1deg) rotateX(-26.93deg) scale(1.12636, 1.12636);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.90234s; transform-origin: 0px 0px 1040.66px; transform: translate3d(0px, 0px, -1040.66px) rotateY(13.6314deg) rotateX(-41.7269deg) scale(0.450964, 0.450964);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.53708s; transform-origin: 0px 0px 970.509px; transform: translate3d(0px, 0px, -970.509px) rotateY(234.38deg) rotateX(-39.5682deg) scale(1.10731, 1.10731);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.09741s; transform-origin: 0px 0px 842.693px; transform: translate3d(0px, 0px, -842.693px) rotateY(110.016deg) rotateX(-1.94166deg) scale(0.497514, 0.497514);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.03333s; transform-origin: 0px 0px 935.782px; transform: translate3d(0px, 0px, -935.782px) rotateY(129.506deg) rotateX(-19.4192deg) scale(0.343845, 0.343845);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.314s; transform-origin: 0px 0px 913.687px; transform: translate3d(0px, 0px, -913.687px) rotateY(94.9826deg) rotateX(-19.4451deg) scale(0.413373, 0.413373);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.172351s; transform-origin: 0px 0px 999.395px; transform: translate3d(0px, 0px, -999.395px) rotateY(212.019deg) rotateX(-36.1024deg) scale(0.649653, 0.649653);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.0123s; transform-origin: 0px 0px 895.783px; transform: translate3d(0px, 0px, -895.783px) rotateY(115.06deg) rotateX(-35.3918deg) scale(0.725247, 0.725247);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.86617s; transform-origin: 0px 0px 1045.79px; transform: translate3d(0px, 0px, -1045.79px) rotateY(74.6125deg) rotateX(-23.3237deg) scale(0.481452, 0.481452);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.83657s; transform-origin: 0px 0px 1093.37px; transform: translate3d(0px, 0px, -1093.37px) rotateY(302.14deg) rotateX(-34.5122deg) scale(0.51864, 0.51864);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.6419s; transform-origin: 0px 0px 825.839px; transform: translate3d(0px, 0px, -825.839px) rotateY(21.0322deg) rotateX(-41.4559deg) scale(0.996961, 0.996961);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.792235s; transform-origin: 0px 0px 848.791px; transform: translate3d(0px, 0px, -848.791px) rotateY(131.439deg) rotateX(-19.4deg) scale(0.341584, 0.341584);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.30909s; transform-origin: 0px 0px 976.526px; transform: translate3d(0px, 0px, -976.526px) rotateY(156.02deg) rotateX(-24.1747deg) scale(0.670861, 0.670861);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.53342s; transform-origin: 0px 0px 982.854px; transform: translate3d(0px, 0px, -982.854px) rotateY(215.264deg) rotateX(-35.2778deg) scale(0.457067, 0.457067);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.59184s; transform-origin: 0px 0px 998.33px; transform: translate3d(0px, 0px, -998.33px) rotateY(268.699deg) rotateX(-30.4056deg) scale(0.343461, 0.343461);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.44835s; transform-origin: 0px 0px 998.544px; transform: translate3d(0px, 0px, -998.544px) rotateY(28.9221deg) rotateX(-44.648deg) scale(0.945643, 0.945643);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.73635s; transform-origin: 0px 0px 834.728px; transform: translate3d(0px, 0px, -834.728px) rotateY(135.223deg) rotateX(-13.4018deg) scale(0.523897, 0.523897);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.69475s; transform-origin: 0px 0px 877.155px; transform: translate3d(0px, 0px, -877.155px) rotateY(173.086deg) rotateX(-40.4425deg) scale(0.453348, 0.453348);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.25267s; transform-origin: 0px 0px 908.991px; transform: translate3d(0px, 0px, -908.991px) rotateY(245.666deg) rotateX(-23.0847deg) scale(1.01341, 1.01341);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.34577s; transform-origin: 0px 0px 915.643px; transform: translate3d(0px, 0px, -915.643px) rotateY(285.061deg) rotateX(-31.9528deg) scale(0.611921, 0.611921);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.419511s; transform-origin: 0px 0px 1040.26px; transform: translate3d(0px, 0px, -1040.26px) rotateY(294.248deg) rotateX(-33.9094deg) scale(0.359171, 0.359171);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.02063s; transform-origin: 0px 0px 871.443px; transform: translate3d(0px, 0px, -871.443px) rotateY(46.659deg) rotateX(-2.77931deg) scale(0.309571, 0.309571);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.51945s; transform-origin: 0px 0px 1045.68px; transform: translate3d(0px, 0px, -1045.68px) rotateY(315.164deg) rotateX(-28.6506deg) scale(1.02419, 1.02419);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.95056s; transform-origin: 0px 0px 1016.7px; transform: translate3d(0px, 0px, -1016.7px) rotateY(134.688deg) rotateX(-7.85992deg) scale(0.770202, 0.770202);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.31941s; transform-origin: 0px 0px 1005.14px; transform: translate3d(0px, 0px, -1005.14px) rotateY(336.558deg) rotateX(-31.8302deg) scale(0.48729, 0.48729);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.60668s; transform-origin: 0px 0px 1047.51px; transform: translate3d(0px, 0px, -1047.51px) rotateY(191.912deg) rotateX(-5.88239deg) scale(1.03618, 1.03618);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.62497s; transform-origin: 0px 0px 996.444px; transform: translate3d(0px, 0px, -996.444px) rotateY(98.5551deg) rotateX(-48.3898deg) scale(0.328158, 0.328158);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.686544s; transform-origin: 0px 0px 816.125px; transform: translate3d(0px, 0px, -816.125px) rotateY(118.712deg) rotateX(-9.47759deg) scale(0.218276, 0.218276);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.38077s; transform-origin: 0px 0px 978.131px; transform: translate3d(0px, 0px, -978.131px) rotateY(216.923deg) rotateX(-30.4594deg) scale(1.19571, 1.19571);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.31218s; transform-origin: 0px 0px 904.712px; transform: translate3d(0px, 0px, -904.712px) rotateY(270.403deg) rotateX(-19.686deg) scale(0.832788, 0.832788);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.83095s; transform-origin: 0px 0px 864.07px; transform: translate3d(0px, 0px, -864.07px) rotateY(304.892deg) rotateX(-48.7715deg) scale(0.374534, 0.374534);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.75672s; transform-origin: 0px 0px 1057.39px; transform: translate3d(0px, 0px, -1057.39px) rotateY(70.8151deg) rotateX(-23.0232deg) scale(0.539142, 0.539142);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.49394s; transform-origin: 0px 0px 936.47px; transform: translate3d(0px, 0px, -936.47px) rotateY(231.51deg) rotateX(-45.5035deg) scale(1.16442, 1.16442);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.70366s; transform-origin: 0px 0px 914.826px; transform: translate3d(0px, 0px, -914.826px) rotateY(354.207deg) rotateX(-20.4162deg) scale(0.68648, 0.68648);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.83372s; transform-origin: 0px 0px 844.753px; transform: translate3d(0px, 0px, -844.753px) rotateY(231.737deg) rotateX(-47.6065deg) scale(0.43728, 0.43728);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.249601s; transform-origin: 0px 0px 1028.48px; transform: translate3d(0px, 0px, -1028.48px) rotateY(297.839deg) rotateX(-0.427186deg) scale(0.238683, 0.238683);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.41897s; transform-origin: 0px 0px 1089.6px; transform: translate3d(0px, 0px, -1089.6px) rotateY(128.344deg) rotateX(-44.8057deg) scale(0.666429, 0.666429);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.41199s; transform-origin: 0px 0px 850.24px; transform: translate3d(0px, 0px, -850.24px) rotateY(347.996deg) rotateX(-14.4745deg) scale(0.664212, 0.664212);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.83983s; transform-origin: 0px 0px 1037.1px; transform: translate3d(0px, 0px, -1037.1px) rotateY(315.528deg) rotateX(-41.3673deg) scale(0.833198, 0.833198);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.67241s; transform-origin: 0px 0px 907.847px; transform: translate3d(0px, 0px, -907.847px) rotateY(64.5979deg) rotateX(-0.545352deg) scale(1.15147, 1.15147);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.94049s; transform-origin: 0px 0px 916.741px; transform: translate3d(0px, 0px, -916.741px) rotateY(281.847deg) rotateX(-15.0152deg) scale(0.535591, 0.535591);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.40571s; transform-origin: 0px 0px 868.5px; transform: translate3d(0px, 0px, -868.5px) rotateY(106.008deg) rotateX(-24.1739deg) scale(0.556795, 0.556795);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.56583s; transform-origin: 0px 0px 930.606px; transform: translate3d(0px, 0px, -930.606px) rotateY(175.884deg) rotateX(-2.58635deg) scale(0.680721, 0.680721);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.38092s; transform-origin: 0px 0px 1041.15px; transform: translate3d(0px, 0px, -1041.15px) rotateY(322.052deg) rotateX(-43.8172deg) scale(1.00114, 1.00114);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.426828s; transform-origin: 0px 0px 1052.48px; transform: translate3d(0px, 0px, -1052.48px) rotateY(194.68deg) rotateX(-11.7629deg) scale(0.384451, 0.384451);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.36887s; transform-origin: 0px 0px 1028.86px; transform: translate3d(0px, 0px, -1028.86px) rotateY(128.078deg) rotateX(-24.7191deg) scale(0.84067, 0.84067);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.267398s; transform-origin: 0px 0px 1044.84px; transform: translate3d(0px, 0px, -1044.84px) rotateY(241.128deg) rotateX(-7.46029deg) scale(0.900192, 0.900192);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.63248s; transform-origin: 0px 0px 890.175px; transform: translate3d(0px, 0px, -890.175px) rotateY(325.512deg) rotateX(-37.7267deg) scale(1.18848, 1.18848);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.85685s; transform-origin: 0px 0px 825.839px; transform: translate3d(0px, 0px, -825.839px) rotateY(183.167deg) rotateX(-8.76042deg) scale(0.550068, 0.550068);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.0219s; transform-origin: 0px 0px 989.165px; transform: translate3d(0px, 0px, -989.165px) rotateY(229.691deg) rotateX(-27.9388deg) scale(0.553089, 0.553089);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.0820403s; transform-origin: 0px 0px 913.684px; transform: translate3d(0px, 0px, -913.684px) rotateY(94.6472deg) rotateX(-21.2714deg) scale(0.254047, 0.254047);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.123s; transform-origin: 0px 0px 1048.62px; transform: translate3d(0px, 0px, -1048.62px) rotateY(156.329deg) rotateX(-39.5534deg) scale(0.227135, 0.227135);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.175s; transform-origin: 0px 0px 903.154px; transform: translate3d(0px, 0px, -903.154px) rotateY(16.8892deg) rotateX(-24.2636deg) scale(0.469679, 0.469679);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.77277s; transform-origin: 0px 0px 854.171px; transform: translate3d(0px, 0px, -854.171px) rotateY(143.609deg) rotateX(-41.0829deg) scale(0.212735, 0.212735);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.6297s; transform-origin: 0px 0px 963.653px; transform: translate3d(0px, 0px, -963.653px) rotateY(198.578deg) rotateX(-26.7046deg) scale(1.14494, 1.14494);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.63412s; transform-origin: 0px 0px 1048.48px; transform: translate3d(0px, 0px, -1048.48px) rotateY(23.3083deg) rotateX(-17.2737deg) scale(1.16234, 1.16234);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.90409s; transform-origin: 0px 0px 1009.47px; transform: translate3d(0px, 0px, -1009.47px) rotateY(79.6602deg) rotateX(-1.85141deg) scale(0.248495, 0.248495);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.416838s; transform-origin: 0px 0px 816.655px; transform: translate3d(0px, 0px, -816.655px) rotateY(36.3787deg) rotateX(-5.55379deg) scale(0.894573, 0.894573);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.18992s; transform-origin: 0px 0px 992.299px; transform: translate3d(0px, 0px, -992.299px) rotateY(47.8545deg) rotateX(-30.2602deg) scale(1.02039, 1.02039);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.86443s; transform-origin: 0px 0px 868.192px; transform: translate3d(0px, 0px, -868.192px) rotateY(260.475deg) rotateX(-41.3671deg) scale(0.31827, 0.31827);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.17083s; transform-origin: 0px 0px 958.082px; transform: translate3d(0px, 0px, -958.082px) rotateY(309.189deg) rotateX(-31.0475deg) scale(0.958334, 0.958334);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.01743s; transform-origin: 0px 0px 996.768px; transform: translate3d(0px, 0px, -996.768px) rotateY(0.396931deg) rotateX(-19.4843deg) scale(1.00208, 1.00208);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.67648s; transform-origin: 0px 0px 988.113px; transform: translate3d(0px, 0px, -988.113px) rotateY(232.416deg) rotateX(-42.324deg) scale(0.630803, 0.630803);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.55926s; transform-origin: 0px 0px 1080.2px; transform: translate3d(0px, 0px, -1080.2px) rotateY(59.506deg) rotateX(-19.485deg) scale(1.10784, 1.10784);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.60866s; transform-origin: 0px 0px 875.541px; transform: translate3d(0px, 0px, -875.541px) rotateY(204.858deg) rotateX(-29.6224deg) scale(0.895616, 0.895616);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.4661s; transform-origin: 0px 0px 1017.92px; transform: translate3d(0px, 0px, -1017.92px) rotateY(359.775deg) rotateX(-35.3791deg) scale(1.02712, 1.02712);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.34788s; transform-origin: 0px 0px 829.406px; transform: translate3d(0px, 0px, -829.406px) rotateY(238.504deg) rotateX(-25.0463deg) scale(0.653856, 0.653856);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.4026s; transform-origin: 0px 0px 837.951px; transform: translate3d(0px, 0px, -837.951px) rotateY(84.2589deg) rotateX(-48.2987deg) scale(0.750944, 0.750944);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.75935s; transform-origin: 0px 0px 1020.28px; transform: translate3d(0px, 0px, -1020.28px) rotateY(354.079deg) rotateX(-25.0697deg) scale(1.00971, 1.00971);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.07508s; transform-origin: 0px 0px 864.613px; transform: translate3d(0px, 0px, -864.613px) rotateY(119.111deg) rotateX(-15.1802deg) scale(0.507755, 0.507755);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.18459s; transform-origin: 0px 0px 868.136px; transform: translate3d(0px, 0px, -868.136px) rotateY(297.589deg) rotateX(-0.434678deg) scale(1.07628, 1.07628);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.71477s; transform-origin: 0px 0px 1039.97px; transform: translate3d(0px, 0px, -1039.97px) rotateY(128.619deg) rotateX(-42.622deg) scale(0.398817, 0.398817);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.66345s; transform-origin: 0px 0px 992.045px; transform: translate3d(0px, 0px, -992.045px) rotateY(154.1deg) rotateX(-43.5218deg) scale(0.640414, 0.640414);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.283946s; transform-origin: 0px 0px 873.99px; transform: translate3d(0px, 0px, -873.99px) rotateY(340.652deg) rotateX(-36.1734deg) scale(0.603282, 0.603282);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.61958s; transform-origin: 0px 0px 997.782px; transform: translate3d(0px, 0px, -997.782px) rotateY(121.85deg) rotateX(-18.6768deg) scale(0.588954, 0.588954);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.203s; transform-origin: 0px 0px 986.23px; transform: translate3d(0px, 0px, -986.23px) rotateY(200.128deg) rotateX(-18.1452deg) scale(0.681416, 0.681416);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.91122s; transform-origin: 0px 0px 1046.1px; transform: translate3d(0px, 0px, -1046.1px) rotateY(25.3298deg) rotateX(-15.9733deg) scale(0.949674, 0.949674);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.77871s; transform-origin: 0px 0px 1069.07px; transform: translate3d(0px, 0px, -1069.07px) rotateY(291.262deg) rotateX(-29.2356deg) scale(0.919679, 0.919679);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.18827s; transform-origin: 0px 0px 992.835px; transform: translate3d(0px, 0px, -992.835px) rotateY(107.623deg) rotateX(-48.0052deg) scale(1.1223, 1.1223);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.63095s; transform-origin: 0px 0px 1053.38px; transform: translate3d(0px, 0px, -1053.38px) rotateY(81.3582deg) rotateX(-15.9459deg) scale(0.306396, 0.306396);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.63567s; transform-origin: 0px 0px 991.058px; transform: translate3d(0px, 0px, -991.058px) rotateY(172.031deg) rotateX(-46.8244deg) scale(1.09718, 1.09718);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.96236s; transform-origin: 0px 0px 925.779px; transform: translate3d(0px, 0px, -925.779px) rotateY(93.3396deg) rotateX(-15.7573deg) scale(0.859279, 0.859279);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.80678s; transform-origin: 0px 0px 995.048px; transform: translate3d(0px, 0px, -995.048px) rotateY(53.1495deg) rotateX(-8.71458deg) scale(0.264332, 0.264332);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.5399s; transform-origin: 0px 0px 1042.94px; transform: translate3d(0px, 0px, -1042.94px) rotateY(104.754deg) rotateX(-9.8588deg) scale(1.17465, 1.17465);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.15648s; transform-origin: 0px 0px 871.385px; transform: translate3d(0px, 0px, -871.385px) rotateY(256.507deg) rotateX(-17.2614deg) scale(0.525084, 0.525084);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.35788s; transform-origin: 0px 0px 937.821px; transform: translate3d(0px, 0px, -937.821px) rotateY(29.6312deg) rotateX(-45.5244deg) scale(0.928195, 0.928195);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.53885s; transform-origin: 0px 0px 1090.23px; transform: translate3d(0px, 0px, -1090.23px) rotateY(222.419deg) rotateX(-46.844deg) scale(0.605315, 0.605315);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.73976s; transform-origin: 0px 0px 983.538px; transform: translate3d(0px, 0px, -983.538px) rotateY(282.962deg) rotateX(-40.9146deg) scale(0.636509, 0.636509);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.62432s; transform-origin: 0px 0px 1039.79px; transform: translate3d(0px, 0px, -1039.79px) rotateY(241.569deg) rotateX(-37.323deg) scale(0.200284, 0.200284);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.3453s; transform-origin: 0px 0px 1084.22px; transform: translate3d(0px, 0px, -1084.22px) rotateY(299.902deg) rotateX(-9.73724deg) scale(0.225759, 0.225759);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.77462s; transform-origin: 0px 0px 1009.32px; transform: translate3d(0px, 0px, -1009.32px) rotateY(174.079deg) rotateX(-46.2942deg) scale(0.426827, 0.426827);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.88144s; transform-origin: 0px 0px 1050.01px; transform: translate3d(0px, 0px, -1050.01px) rotateY(228.392deg) rotateX(-21.4672deg) scale(0.223739, 0.223739);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.21544s; transform-origin: 0px 0px 824.565px; transform: translate3d(0px, 0px, -824.565px) rotateY(218.586deg) rotateX(-12.8379deg) scale(1.07222, 1.07222);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.75201s; transform-origin: 0px 0px 1012.45px; transform: translate3d(0px, 0px, -1012.45px) rotateY(135.021deg) rotateX(-10.2193deg) scale(0.543397, 0.543397);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.381218s; transform-origin: 0px 0px 998.708px; transform: translate3d(0px, 0px, -998.708px) rotateY(313.174deg) rotateX(-40.6052deg) scale(0.819579, 0.819579);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.85121s; transform-origin: 0px 0px 884.26px; transform: translate3d(0px, 0px, -884.26px) rotateY(350.518deg) rotateX(-30.9043deg) scale(0.788395, 0.788395);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.90556s; transform-origin: 0px 0px 866.472px; transform: translate3d(0px, 0px, -866.472px) rotateY(21.8484deg) rotateX(-12.798deg) scale(0.732766, 0.732766);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.92597s; transform-origin: 0px 0px 1092.17px; transform: translate3d(0px, 0px, -1092.17px) rotateY(55.1943deg) rotateX(-34.3959deg) scale(0.248769, 0.248769);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.43682s; transform-origin: 0px 0px 1013.54px; transform: translate3d(0px, 0px, -1013.54px) rotateY(3.06497deg) rotateX(-4.43342deg) scale(0.462038, 0.462038);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.33247s; transform-origin: 0px 0px 1029.52px; transform: translate3d(0px, 0px, -1029.52px) rotateY(96.2107deg) rotateX(-36.5334deg) scale(0.667334, 0.667334);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.14468s; transform-origin: 0px 0px 950.438px; transform: translate3d(0px, 0px, -950.438px) rotateY(345.838deg) rotateX(-10.3386deg) scale(0.350565, 0.350565);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.36727s; transform-origin: 0px 0px 939.651px; transform: translate3d(0px, 0px, -939.651px) rotateY(99.0122deg) rotateX(-9.30412deg) scale(0.387557, 0.387557);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.38571s; transform-origin: 0px 0px 1003.47px; transform: translate3d(0px, 0px, -1003.47px) rotateY(231.346deg) rotateX(-43.9557deg) scale(0.391961, 0.391961);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.726428s; transform-origin: 0px 0px 1094.67px; transform: translate3d(0px, 0px, -1094.67px) rotateY(343.623deg) rotateX(-2.71634deg) scale(0.558668, 0.558668);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.24812s; transform-origin: 0px 0px 1016.11px; transform: translate3d(0px, 0px, -1016.11px) rotateY(150.986deg) rotateX(-5.08342deg) scale(0.454913, 0.454913);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.31507s; transform-origin: 0px 0px 969.434px; transform: translate3d(0px, 0px, -969.434px) rotateY(339.721deg) rotateX(-22.145deg) scale(0.423356, 0.423356);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.430082s; transform-origin: 0px 0px 1004.48px; transform: translate3d(0px, 0px, -1004.48px) rotateY(324.229deg) rotateX(-19.2496deg) scale(0.570006, 0.570006);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.16914s; transform-origin: 0px 0px 943.005px; transform: translate3d(0px, 0px, -943.005px) rotateY(170.124deg) rotateX(-14.6444deg) scale(0.452936, 0.452936);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.78605s; transform-origin: 0px 0px 1064.25px; transform: translate3d(0px, 0px, -1064.25px) rotateY(81.8007deg) rotateX(-36.7232deg) scale(0.797802, 0.797802);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.3224s; transform-origin: 0px 0px 942.764px; transform: translate3d(0px, 0px, -942.764px) rotateY(279.55deg) rotateX(-45.3074deg) scale(0.385685, 0.385685);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.56739s; transform-origin: 0px 0px 1042.51px; transform: translate3d(0px, 0px, -1042.51px) rotateY(91.9344deg) rotateX(-23.6997deg) scale(0.542168, 0.542168);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.50911s; transform-origin: 0px 0px 866.65px; transform: translate3d(0px, 0px, -866.65px) rotateY(295.933deg) rotateX(-9.1658deg) scale(0.301611, 0.301611);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.49383s; transform-origin: 0px 0px 810.606px; transform: translate3d(0px, 0px, -810.606px) rotateY(161.371deg) rotateX(-26.821deg) scale(0.73534, 0.73534);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.24777s; transform-origin: 0px 0px 1052.52px; transform: translate3d(0px, 0px, -1052.52px) rotateY(29.1206deg) rotateX(-31.2563deg) scale(0.811405, 0.811405);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.70841s; transform-origin: 0px 0px 970.69px; transform: translate3d(0px, 0px, -970.69px) rotateY(320.241deg) rotateX(-28.4261deg) scale(0.422832, 0.422832);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.05844s; transform-origin: 0px 0px 860.63px; transform: translate3d(0px, 0px, -860.63px) rotateY(17.2436deg) rotateX(-45.4907deg) scale(0.699073, 0.699073);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.41622s; transform-origin: 0px 0px 1082.72px; transform: translate3d(0px, 0px, -1082.72px) rotateY(160.556deg) rotateX(-6.62363deg) scale(0.482355, 0.482355);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.32106s; transform-origin: 0px 0px 906.782px; transform: translate3d(0px, 0px, -906.782px) rotateY(39.5081deg) rotateX(-20.005deg) scale(0.292438, 0.292438);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.33108s; transform-origin: 0px 0px 993.67px; transform: translate3d(0px, 0px, -993.67px) rotateY(294.692deg) rotateX(-43.8337deg) scale(1.16182, 1.16182);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.07344s; transform-origin: 0px 0px 837.31px; transform: translate3d(0px, 0px, -837.31px) rotateY(214.724deg) rotateX(-34.8736deg) scale(0.205996, 0.205996);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.73499s; transform-origin: 0px 0px 903.082px; transform: translate3d(0px, 0px, -903.082px) rotateY(16.1874deg) rotateX(-19.0282deg) scale(0.394291, 0.394291);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.88881s; transform-origin: 0px 0px 932.612px; transform: translate3d(0px, 0px, -932.612px) rotateY(24.2151deg) rotateX(-42.0385deg) scale(0.621389, 0.621389);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.77864s; transform-origin: 0px 0px 895.722px; transform: translate3d(0px, 0px, -895.722px) rotateY(108.826deg) rotateX(-40.8951deg) scale(0.413095, 0.413095);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.26657s; transform-origin: 0px 0px 1052.03px; transform: translate3d(0px, 0px, -1052.03px) rotateY(36.8462deg) rotateX(-9.83739deg) scale(0.891749, 0.891749);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.83894s; transform-origin: 0px 0px 1083.58px; transform: translate3d(0px, 0px, -1083.58px) rotateY(183.48deg) rotateX(-34.4502deg) scale(0.42919, 0.42919);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.18306s; transform-origin: 0px 0px 1008.9px; transform: translate3d(0px, 0px, -1008.9px) rotateY(116.742deg) rotateX(-46.0283deg) scale(1.14374, 1.14374);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.5148s; transform-origin: 0px 0px 985.912px; transform: translate3d(0px, 0px, -985.912px) rotateY(318.239deg) rotateX(-18.2322deg) scale(0.963782, 0.963782);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.93467s; transform-origin: 0px 0px 1075.05px; transform: translate3d(0px, 0px, -1075.05px) rotateY(92.2262deg) rotateX(-24.9904deg) scale(0.528755, 0.528755);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.2128s; transform-origin: 0px 0px 1025.87px; transform: translate3d(0px, 0px, -1025.87px) rotateY(287.165deg) rotateX(-34.1891deg) scale(0.433778, 0.433778);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.04089s; transform-origin: 0px 0px 1084.35px; transform: translate3d(0px, 0px, -1084.35px) rotateY(176.238deg) rotateX(-40.7291deg) scale(0.645897, 0.645897);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.816243s; transform-origin: 0px 0px 958.576px; transform: translate3d(0px, 0px, -958.576px) rotateY(220.204deg) rotateX(-39.8588deg) scale(1.05475, 1.05475);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.95075s; transform-origin: 0px 0px 980.67px; transform: translate3d(0px, 0px, -980.67px) rotateY(29.5277deg) rotateX(-28.6195deg) scale(0.962541, 0.962541);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.28301s; transform-origin: 0px 0px 1008.55px; transform: translate3d(0px, 0px, -1008.55px) rotateY(12.7776deg) rotateX(-24.9567deg) scale(0.232454, 0.232454);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.86572s; transform-origin: 0px 0px 1040.66px; transform: translate3d(0px, 0px, -1040.66px) rotateY(259.283deg) rotateX(-28.4331deg) scale(0.624901, 0.624901);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.61236s; transform-origin: 0px 0px 906.462px; transform: translate3d(0px, 0px, -906.462px) rotateY(143.382deg) rotateX(-12.8914deg) scale(0.203324, 0.203324);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.76589s; transform-origin: 0px 0px 908.689px; transform: translate3d(0px, 0px, -908.689px) rotateY(334.633deg) rotateX(-15.4196deg) scale(1.13205, 1.13205);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.62476s; transform-origin: 0px 0px 911.464px; transform: translate3d(0px, 0px, -911.464px) rotateY(127.333deg) rotateX(-9.69405deg) scale(0.630346, 0.630346);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.34426s; transform-origin: 0px 0px 997.955px; transform: translate3d(0px, 0px, -997.955px) rotateY(54.4215deg) rotateX(-27.387deg) scale(0.39308, 0.39308);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.48997s; transform-origin: 0px 0px 919.22px; transform: translate3d(0px, 0px, -919.22px) rotateY(77.8876deg) rotateX(-38.7442deg) scale(1.07163, 1.07163);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.63005s; transform-origin: 0px 0px 946.138px; transform: translate3d(0px, 0px, -946.138px) rotateY(80.3971deg) rotateX(-10.5453deg) scale(0.769704, 0.769704);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.41588s; transform-origin: 0px 0px 1006.18px; transform: translate3d(0px, 0px, -1006.18px) rotateY(346.654deg) rotateX(-49.0418deg) scale(0.670182, 0.670182);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.38053s; transform-origin: 0px 0px 821.838px; transform: translate3d(0px, 0px, -821.838px) rotateY(42.9398deg) rotateX(-8.58511deg) scale(0.930823, 0.930823);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.45837s; transform-origin: 0px 0px 918.252px; transform: translate3d(0px, 0px, -918.252px) rotateY(126.308deg) rotateX(-1.88215deg) scale(0.374393, 0.374393);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.94268s; transform-origin: 0px 0px 1055.79px; transform: translate3d(0px, 0px, -1055.79px) rotateY(184.915deg) rotateX(-2.41502deg) scale(0.489792, 0.489792);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.56678s; transform-origin: 0px 0px 818.688px; transform: translate3d(0px, 0px, -818.688px) rotateY(253.088deg) rotateX(-47.7421deg) scale(1.06811, 1.06811);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.09059s; transform-origin: 0px 0px 1054.11px; transform: translate3d(0px, 0px, -1054.11px) rotateY(101.386deg) rotateX(-20.5376deg) scale(0.513406, 0.513406);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.39846s; transform-origin: 0px 0px 941.935px; transform: translate3d(0px, 0px, -941.935px) rotateY(187.434deg) rotateX(-14.4263deg) scale(0.586319, 0.586319);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.64116s; transform-origin: 0px 0px 954.249px; transform: translate3d(0px, 0px, -954.249px) rotateY(214.657deg) rotateX(-21.8856deg) scale(0.893096, 0.893096);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.33865s; transform-origin: 0px 0px 811.203px; transform: translate3d(0px, 0px, -811.203px) rotateY(185.663deg) rotateX(-6.98087deg) scale(0.202618, 0.202618);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.71887s; transform-origin: 0px 0px 874.061px; transform: translate3d(0px, 0px, -874.061px) rotateY(15.5606deg) rotateX(-30.7725deg) scale(0.955463, 0.955463);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.70658s; transform-origin: 0px 0px 847.482px; transform: translate3d(0px, 0px, -847.482px) rotateY(148.336deg) rotateX(-38.3409deg) scale(0.705483, 0.705483);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.44147s; transform-origin: 0px 0px 881.148px; transform: translate3d(0px, 0px, -881.148px) rotateY(259.111deg) rotateX(-15.7964deg) scale(0.627798, 0.627798);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.08821s; transform-origin: 0px 0px 1024.35px; transform: translate3d(0px, 0px, -1024.35px) rotateY(32.4507deg) rotateX(-13.1648deg) scale(0.89406, 0.89406);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.10885s; transform-origin: 0px 0px 1084.14px; transform: translate3d(0px, 0px, -1084.14px) rotateY(65.2751deg) rotateX(-40.1488deg) scale(0.408131, 0.408131);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.680252s; transform-origin: 0px 0px 914.646px; transform: translate3d(0px, 0px, -914.646px) rotateY(172.758deg) rotateX(-23.1464deg) scale(0.995749, 0.995749);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.80053s; transform-origin: 0px 0px 1060.14px; transform: translate3d(0px, 0px, -1060.14px) rotateY(80.9051deg) rotateX(-49.9804deg) scale(0.362152, 0.362152);">
+				</div>
+				<div class="star"
+					style="animation-delay: 8.65832s; transform-origin: 0px 0px 1023.94px; transform: translate3d(0px, 0px, -1023.94px) rotateY(317.024deg) rotateX(-44.9958deg) scale(1.06978, 1.06978);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.86518s; transform-origin: 0px 0px 970.488px; transform: translate3d(0px, 0px, -970.488px) rotateY(270.196deg) rotateX(-25.8195deg) scale(0.331822, 0.331822);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.68995s; transform-origin: 0px 0px 809.863px; transform: translate3d(0px, 0px, -809.863px) rotateY(186.343deg) rotateX(-6.59716deg) scale(0.284241, 0.284241);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.35404s; transform-origin: 0px 0px 835.413px; transform: translate3d(0px, 0px, -835.413px) rotateY(66.8449deg) rotateX(-15.6429deg) scale(1.17252, 1.17252);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.88834s; transform-origin: 0px 0px 828.404px; transform: translate3d(0px, 0px, -828.404px) rotateY(18.1188deg) rotateX(-10.0571deg) scale(0.589092, 0.589092);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.96575s; transform-origin: 0px 0px 1082.27px; transform: translate3d(0px, 0px, -1082.27px) rotateY(167.824deg) rotateX(-11.1422deg) scale(1.12043, 1.12043);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.57312s; transform-origin: 0px 0px 961.204px; transform: translate3d(0px, 0px, -961.204px) rotateY(315.991deg) rotateX(-19.3899deg) scale(0.865556, 0.865556);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.44757s; transform-origin: 0px 0px 1056.1px; transform: translate3d(0px, 0px, -1056.1px) rotateY(320.544deg) rotateX(-21.1497deg) scale(0.890375, 0.890375);">
+				</div>
+				<div class="star"
+					style="animation-delay: 0.562547s; transform-origin: 0px 0px 840.833px; transform: translate3d(0px, 0px, -840.833px) rotateY(109.228deg) rotateX(-37.5411deg) scale(0.361038, 0.361038);">
+				</div>
+				<div class="star"
+					style="animation-delay: 5.36731s; transform-origin: 0px 0px 1034.3px; transform: translate3d(0px, 0px, -1034.3px) rotateY(100.096deg) rotateX(-43.6217deg) scale(1.1646, 1.1646);">
+				</div>
+				<div class="star"
+					style="animation-delay: 6.689s; transform-origin: 0px 0px 827.456px; transform: translate3d(0px, 0px, -827.456px) rotateY(14.9528deg) rotateX(-0.927333deg) scale(0.316769, 0.316769);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.28083s; transform-origin: 0px 0px 912.934px; transform: translate3d(0px, 0px, -912.934px) rotateY(267.921deg) rotateX(-4.68626deg) scale(0.317578, 0.317578);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.24851s; transform-origin: 0px 0px 1045.83px; transform: translate3d(0px, 0px, -1045.83px) rotateY(329.364deg) rotateX(-16.362deg) scale(0.729491, 0.729491);">
+				</div>
+				<div class="star"
+					style="animation-delay: 7.62425s; transform-origin: 0px 0px 852.276px; transform: translate3d(0px, 0px, -852.276px) rotateY(38.4455deg) rotateX(-17.6739deg) scale(0.630708, 0.630708);">
+				</div>
+				<div class="star"
+					style="animation-delay: 3.58564s; transform-origin: 0px 0px 872.224px; transform: translate3d(0px, 0px, -872.224px) rotateY(295.971deg) rotateX(-41.0747deg) scale(0.526323, 0.526323);">
+				</div>
+				<div class="star"
+					style="animation-delay: 4.07059s; transform-origin: 0px 0px 999.26px; transform: translate3d(0px, 0px, -999.26px) rotateY(306.618deg) rotateX(-14.3035deg) scale(0.586643, 0.586643);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.62437s; transform-origin: 0px 0px 965.437px; transform: translate3d(0px, 0px, -965.437px) rotateY(173.585deg) rotateX(-40.5994deg) scale(0.95758, 0.95758);">
+				</div>
+				<div class="star"
+					style="animation-delay: 2.37893s; transform-origin: 0px 0px 1045.34px; transform: translate3d(0px, 0px, -1045.34px) rotateY(154.79deg) rotateX(-42.9175deg) scale(1.17098, 1.17098);">
+				</div>
+				<div class="star"
+					style="animation-delay: 9.10622s; transform-origin: 0px 0px 1085.48px; transform: translate3d(0px, 0px, -1085.48px) rotateY(319.755deg) rotateX(-31.446deg) scale(0.887174, 0.887174);">
+				</div>
+				<div class="star"
+					style="animation-delay: 1.61728s; transform-origin: 0px 0px 895.712px; transform: translate3d(0px, 0px, -895.712px) rotateY(291.325deg) rotateX(-27.4867deg) scale(0.951406, 0.951406);">
+				</div>
+			</div>
+			<div class="meteor"
+				style="top: 406px; left: 33%; animation: 12s linear 0s infinite normal none running meteorAnim;">
+			</div>
+			<div class="meteor"
+				style="top: 241px; left: 48%; animation: 18s linear 0s infinite normal none running meteorAnim;">
+			</div>
+			<div class="meteor"
+				style="top: 407px; left: 55%; animation: 16s linear 0s infinite normal none running meteorAnim;">
+			</div>
+			<div class="meteor"
+				style="top: 329px; left: 26%; animation: 19s linear 0s infinite normal none running meteorAnim;">
+			</div>
+			<div class="meteor"
+				style="top: 216px; left: 26%; animation: 19s linear 0s infinite normal none running meteorAnim;">
+			</div>
+		</div>
+
+		<!-- 主内容 -->
+		<div class="container">
+			<header>
+				<div class="logo">
+					<i class="fas fa-star-and-crescent"></i>
+					<h1>寒烟主页</h1>
+				</div>
+				<div class="time-date">
+					<div class="time" id="currentTime">00:00:00</div>
+					<div class="date" id="currentDate">2025年10月17日 星期五</div>
+				</div>
+			</header>
+
+			<div class="search-container">
+				<div class="search-box">
+					<input type="text" placeholder="搜索网页或输入网址...">
+					<button class="search-btn"><i class="fas fa-search"></i></button>
+				</div>
+			</div>
+
+			<section class="sites-section">
+				<h2 class="section-title"><i class="fas fa-compass"></i> 常用网站</h2>
+				<div class="sites-grid" id="sitesGrid">
+					<!-- 网站卡片将通过JavaScript动态生成 -->
+				</div>
+			</section>
+
+			<footer>
+				<p>寒烟主页 &copy; 2025 | 设计灵感来自寒烟浩瀚宇宙</p>
+			</footer>
+		</div>
+
+		<!-- 添加网站模态框 -->
+		<div class="modal" id="addSiteModal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">添加新网站</h3>
+					<button class="close-modal" id="closeModal">&times;</button>
+				</div>
+				<form id="addSiteForm">
+					<div class="form-group">
+						<label for="siteName">网站名称</label>
+						<input type="text" id="siteName" class="form-control" placeholder="例如：谷歌" required>
+					</div>
+					<div class="form-group">
+						<label for="siteUrl">网站地址</label>
+						<input type="url" id="siteUrl" class="form-control" placeholder="https://www.example.com"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="siteIcon">选择图标</label>
+						<select id="siteIcon" class="form-control">
+							<option value="fas fa-search">搜索</option>
+							<option value="fas fa-envelope">邮件</option>
+							<option value="fas fa-shopping-cart">购物</option>
+							<option value="fas fa-video">视频</option>
+							<option value="fas fa-music">音乐</option>
+							<option value="fas fa-newspaper">新闻</option>
+							<option value="fas fa-gamepad">游戏</option>
+							<option value="fas fa-graduation-cap">学习</option>
+							<option value="fas fa-plane">旅行</option>
+							<option value="fas fa-cloud">云存储</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block">添加网站</button>
+				</form>
+			</div>
+		</div>
+
+		<script>
+			// 更新时间和日期
+			function updateDateTime() {
+				const now = new Date();
+
+				// 格式化时间
+				const time = now.toLocaleTimeString('zh-CN');
+				document.getElementById('currentTime').textContent = time;
+
+				// 格式化日期
+				const options = {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					weekday: 'long'
+				};
+				const date = now.toLocaleDateString('zh-CN', options);
+				document.getElementById('currentDate').textContent = date;
+			}
+
+			// 网站数据
+			let sites = [{
+					name: '谷歌',
+					url: 'https://www.google.com',
+					icon: 'fas fa-search'
+				},
+				{
+					name: 'YouTube',
+					url: 'https://www.youtube.com',
+					icon: 'fas fa-video'
+				},
+				{
+					name: 'GitHub',
+					url: 'https://github.com',
+					icon: 'fab fa-github'
+				},
+				{
+					name: '知乎',
+					url: 'https://www.zhihu.com',
+					icon: 'fas fa-question-circle'
+				},
+				{
+					name: 'B站',
+					url: 'https://www.bilibili.com',
+					icon: 'fas fa-play-circle'
+				},
+				{
+					name: '淘宝',
+					url: 'https://www.taobao.com',
+					icon: 'fas fa-shopping-cart'
+				},
+				{
+					name: '微博',
+					url: 'https://weibo.com',
+					icon: 'fab fa-weibo'
+				},
+				{
+					name: '网易云',
+					url: 'https://music.163.com',
+					icon: 'fas fa-music'
+				},
+				{
+					name: '添加网站',
+					url: '#',
+					icon: 'fas fa-plus',
+					isAdd: true
+				}
+			];
+
+			// 渲染网站卡片
+			function renderSites() {
+				const sitesGrid = document.getElementById('sitesGrid');
+				sitesGrid.innerHTML = '';
+
+				sites.forEach((site, index) => {
+					if (site.isAdd) {
+						// 添加网站卡片
+						const addCard = document.createElement('div');
+						addCard.className = 'site-card add-site';
+						addCard.innerHTML = `
+                        <i class="${site.icon}"></i>
+                        <div class="site-name">${site.name}</div>
+                    `;
+						addCard.addEventListener('click', () => {
+							document.getElementById('addSiteModal').style.display = 'flex';
+						});
+						sitesGrid.appendChild(addCard);
+					} else {
+						// 普通网站卡片
+						const siteCard = document.createElement('div');
+						siteCard.className = 'site-card';
+						siteCard.innerHTML = `
+                        <button class="delete-btn" data-index="${index}">&times;</button>
+                        <div class="site-icon">
+                            <i class="${site.icon}"></i>
+                        </div>
+                        <div class="site-name">${site.name}</div>
+                    `;
+
+						// 点击网站卡片跳转
+						siteCard.addEventListener('click', (e) => {
+							if (!e.target.classList.contains('delete-btn')) {
+								window.open(site.url, '_blank');
+							}
+						});
+
+						// 删除按钮事件
+						const deleteBtn = siteCard.querySelector('.delete-btn');
+						deleteBtn.addEventListener('click', (e) => {
+							e.stopPropagation();
+							if (confirm(`确定要删除 "${site.name}" 吗？`)) {
+								sites.splice(index, 1);
+								saveSites();
+								renderSites();
+							}
+						});
+
+						sitesGrid.appendChild(siteCard);
+					}
+				});
+			}
+
+			// 保存网站数据到本地存储
+			function saveSites() {
+				// 过滤掉"添加网站"卡片
+				const sitesToSave = sites.filter(site => !site.isAdd);
+				localStorage.setItem('browserSites', JSON.stringify(sitesToSave));
+			}
+
+			// 从本地存储加载网站数据
+			function loadSites() {
+				const savedSites = localStorage.getItem('browserSites');
+				if (savedSites) {
+					const parsedSites = JSON.parse(savedSites);
+					sites = [...parsedSites, {
+						name: '添加网站',
+						url: '#',
+						icon: 'fas fa-plus',
+						isAdd: true
+					}];
+				}
+			}
+
+			// 初始化
+			document.addEventListener('DOMContentLoaded', () => {
+				updateDateTime();
+				setInterval(updateDateTime, 1000);
+
+				// 加载保存的网站
+				loadSites();
+				renderSites();
+
+				// 搜索功能
+				const searchInput = document.querySelector('.search-box input');
+				const searchBtn = document.querySelector('.search-btn');
+
+				const performSearch = () => {
+					const query = searchInput.value.trim();
+					if (query) {
+						if (query.includes('.') && !query.includes(' ')) {
+							// 如果看起来像网址，直接跳转
+							window.open(query.startsWith('http') ? query : `https://${query}`, '_blank');
+						} else {
+							// 否则使用谷歌搜索
+							window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+						}
+						searchInput.value = '';
+					}
+				};
+
+				searchBtn.addEventListener('click', performSearch);
+				searchInput.addEventListener('keypress', (e) => {
+					if (e.key === 'Enter') {
+						performSearch();
+					}
+				});
+
+				// 模态框功能
+				const modal = document.getElementById('addSiteModal');
+				const closeModal = document.getElementById('closeModal');
+				const addSiteForm = document.getElementById('addSiteForm');
+
+				closeModal.addEventListener('click', () => {
+					modal.style.display = 'none';
+				});
+
+				window.addEventListener('click', (e) => {
+					if (e.target === modal) {
+						modal.style.display = 'none';
+					}
+				});
+
+				addSiteForm.addEventListener('submit', (e) => {
+					e.preventDefault();
+
+					const siteName = document.getElementById('siteName').value;
+					const siteUrl = document.getElementById('siteUrl').value;
+					const siteIcon = document.getElementById('siteIcon').value;
+
+					// 添加到网站列表
+					sites.splice(sites.length - 1, 0, {
+						name: siteName,
+						url: siteUrl,
+						icon: siteIcon
+					});
+
+					// 保存并重新渲染
+					saveSites();
+					renderSites();
+
+					// 重置表单并关闭模态框
+					addSiteForm.reset();
+					modal.style.display = 'none';
+				});
+			});
+		</script>
+	</body>
+</html>
